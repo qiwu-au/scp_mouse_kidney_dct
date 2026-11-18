@@ -1,13 +1,14 @@
 # Inputs
 
-Only three small files are part of this repository. Everything else is downloaded by the user and placed as shown.
+Only four small files are part of this repository. Everything else is downloaded by the user and placed as shown.
 
 ## Included
 
 | file | content |
 | --- | --- |
-| `DCT/DCT_markers_V1.xlsx` | marker list of the DCT data (Supplementary Table S2 of the manuscript) |
-| `KIDNEY/KIDNEY_markers_V3.xlsx` | marker list of the total-kidney data (Supplementary Table S2); the endothelial row is added in the code (`scripts/kidney_annotation_v3_endothelial.py`) |
+| `marker_lists_Supplementary_Table_S2.xlsx` | the marker lists of the manuscript (Supplementary Table S2): tab "Markers of kidney" with 17 cell types, tab "Markers of DCT" with 3. The code does not read this file |
+| `KIDNEY/KIDNEY_markers_V3.xlsx` | the kidney list as the code reads it: the first 16 cell types of Supplementary Table S2, the same rows in the same order. The 17th row of the table, Endothelial cells (Pecam1, Emcn, Eng, Esam, Icam2, Fabp4, Ehd4), is added in the code (`ENDOTHELIAL_MARKERS` in `scripts/kidney_annotation_scan_lib.py`), because some steps compare the annotation without and with that row |
+| `DCT/DCT_markers_V1.xlsx` | the DCT list as the code reads it: the three rows of Supplementary Table S2 |
 | `input_checksums.csv` | size and SHA-256 of the combined DCT report; `scripts/dct_intake_intake.py` stops if the file differs |
 
 ## To be added by the user

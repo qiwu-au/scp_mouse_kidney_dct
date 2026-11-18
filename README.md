@@ -16,7 +16,7 @@ Python code of the analyses of the manuscript [manuscript reference]. Archived v
 | `_scanpy_compat.py` | fix that makes the random seed of Leiden clustering take effect on Windows (see "Reproducing the clusters") |
 | `_scanpy_runtime.py` | cache folders for Matplotlib and Numba |
 | `checks/check_dct_labels.py` | compares a rerun of the DCT annotation with the deposited processed data |
-| `data/` | the two marker lists, the checksum of the DCT report, and `data/README.md`, which says where every other input goes |
+| `data/` | the marker lists, the checksum of the DCT report, and `data/README.md`, which says where every other input goes |
 | `first_submission/` | the two scripts of the first submission |
 | `requirements.txt`, `environment.yml` | Python packages with their versions |
 
@@ -43,7 +43,10 @@ pip install -r requirements.txt
 - the two Spectronaut protein-group reports (ProteomeXchange/PRIDE: PXD073729 for total kidney,
   [PRIDE accession of the new DCT raw data] for the DCT cells);
 - the processed data (Zenodo, [Zenodo DOI]);
-- the marker lists (included; Supplementary Table S2 of the manuscript);
+- the marker lists (included). `data/marker_lists_Supplementary_Table_S2.xlsx` is Supplementary Table S2 of the
+  manuscript: the kidney list with 17 cell types and the DCT list. The code reads `data/KIDNEY/KIDNEY_markers_V3.xlsx`
+  and `data/DCT/DCT_markers_V1.xlsx`. The kidney file holds the first 16 cell types of the table; the code adds the
+  17th row, Endothelial cells, itself (`ENDOTHELIAL_MARKERS` in `scripts/kidney_annotation_scan_lib.py`);
 - third-party data that the user downloads: the Mouse Kidney Atlas (Zenodo record 17395591), MitoCarta3.0, the
   Kidney Tubule Expression Atlas ([URL]) and a bulk proteome of mouse kidney on a low-potassium diet ([REF]).
 
