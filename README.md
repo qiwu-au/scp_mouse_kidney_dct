@@ -3,7 +3,7 @@
 Qi Wu, Lei Cheng, Xiang Zheng, Adrienne M. Assmus, Cristina Esteva Font, Charlotte C. Petersen, Xiangning Ding, Søren R. Paludan and Robert A. Fenton
 
 Python code of the analyses of this manuscript, on single-cell proteomics of mouse kidney and distal convoluted
-tubule (DCT) cells. Archived version of this repository: [code DOI]. Licence: MIT.
+tubule (DCT) cells. Licence: MIT.
 
 Claude Code (Anthropic) was used to aid the scripting of the analyses of the revised manuscript (`scripts/`).
 
@@ -164,4 +164,4 @@ submission are not analysed in the revised paper.
 ## Licence and citation
 
 The code is available under the MIT licence (`LICENSE`). Please cite the manuscript (title and authors at the top of
-this page) and the archived version of this repository, [code DOI].
+this page).
