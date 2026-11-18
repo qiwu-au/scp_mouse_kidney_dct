@@ -1,0 +1,13 @@
+# Outputs and caches
+results/
+.cache/
+__pycache__/
+*.pyc
+
+# Inputs that are not part of this repository (see data/README.md)
+data/DCT/*.csv
+data/KIDNEY/*.csv
+data/KIDNEY/*.h5ad
+data/KIDNEY/V3/
+data/reference/
+data/zenodo/
