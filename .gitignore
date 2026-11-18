@@ -4,6 +4,10 @@ results/
 __pycache__/
 *.pyc
 
+# Marker workbooks that the code writes from data/marker_lists_Supplementary_Table_S2.xlsx
+data/DCT/*.xlsx
+data/KIDNEY/*.xlsx
+
 # Inputs that are not part of this repository (see data/README.md)
 data/DCT/*.csv
 data/KIDNEY/*.csv

@@ -43,10 +43,12 @@ pip install -r requirements.txt
 - the two Spectronaut protein-group reports (ProteomeXchange/PRIDE: PXD073729 for total kidney,
   [PRIDE accession of the new DCT raw data] for the DCT cells);
 - the processed data (Zenodo, [Zenodo DOI]);
-- the marker lists (included). `data/marker_lists_Supplementary_Table_S2.xlsx` is Supplementary Table S2 of the
-  manuscript: the kidney list with 17 cell types and the DCT list. The code reads `data/KIDNEY/KIDNEY_markers_V3.xlsx`
-  and `data/DCT/DCT_markers_V1.xlsx`. The kidney file holds the first 16 cell types of the table; the code adds the
-  17th row, Endothelial cells, itself (`ENDOTHELIAL_MARKERS` in `scripts/kidney_annotation_scan_lib.py`);
+- the marker lists (included): `data/marker_lists_Supplementary_Table_S2.xlsx` is Supplementary Table S2 of the
+  manuscript, the kidney list with 17 cell types and the DCT list. It is the only marker file here. The scripts read
+  the lists from two small workbooks, `data/KIDNEY/KIDNEY_markers_V3.xlsx` and `data/DCT/DCT_markers_V1.xlsx`, which
+  `scripts/scp_common.py` writes from the table the first time a script runs. The kidney workbook holds the first 16
+  cell types of the table; the steps that used the 17th row, Endothelial cells, add it in the code
+  (`ENDOTHELIAL_MARKERS` in `scripts/kidney_annotation_scan_lib.py`);
 - third-party data that the user downloads: the Mouse Kidney Atlas (Zenodo record 17395591), MitoCarta3.0, the
   Kidney Tubule Expression Atlas ([URL]) and a bulk proteome of mouse kidney on a low-potassium diet ([REF]).
 
@@ -146,6 +148,8 @@ different partition. The cluster column of the processed data (Zenodo) is the re
 
 - File names, module names, output folders and comments were rewritten by fixed rules.
 - `_scanpy_runtime.py` only sets cache folders.
+- `scp_common.py` writes the two marker workbooks that the scripts read from the marker table of the manuscript. The
+  cells are those of the workbooks used in the analyses.
 - The steps no longer check the checksums of the authors' analysis plans. `dct_intake_intake.py` still checks the
   checksum of the DCT report (`data/input_checksums.csv`).
 - Three comparisons with tables of an earlier search of the same DCT runs are skipped when those tables are absent:

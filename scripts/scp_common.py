@@ -80,6 +80,49 @@ DCT_NEW_INPUTS = {
 }
 DCT_CELL_ID_RE = re.compile(r"^\[(\d+)\] (Ctrl|ZeroK)_GFP_1cell_WISHDIA_P(\d+)_(\d{4})\.htrms\.PG\.Quantity$")
 
+# The scripts read the marker lists from two workbooks. They are written here, once, from the marker table of
+# the manuscript (Supplementary Table S2), which is the only marker file in the repository.
+MARKER_TABLE = DATA_DIR / "marker_lists_Supplementary_Table_S2.xlsx"
+MARKER_WORKBOOKS = {
+    # workbook: (tab of the table, header row of the workbook, sheet name, rows taken; None = all)
+    KIDNEY_DIR / "KIDNEY_markers_V3.xlsx": ("Markers of kidney", ("Cell Type", "Marker Genes", "Short"), "Ark1", 16),
+    DCT_DIR / "DCT_markers_V1.xlsx": ("Markers of DCT", ("Cell Type", "Marker Genes"), "Sheet1", None),
+}
+
+
+def ensure_marker_workbooks() -> list[Path]:
+    """Write the marker workbooks that are absent; return the paths written.
+
+    The kidney workbook holds the first 16 cell types of the tab "Markers of kidney". The 17th row of the
+    table, Endothelial cells, is added in the code by the steps that used it (``ENDOTHELIAL_MARKERS``),
+    because other steps ran without it.
+    """
+    missing = [path for path in MARKER_WORKBOOKS if not path.exists()]
+    if not missing:
+        return []
+    if not MARKER_TABLE.exists():
+        raise FileNotFoundError(f"{MARKER_TABLE} not found; it is part of the repository (data/README.md).")
+    import openpyxl
+
+    table = openpyxl.load_workbook(MARKER_TABLE, read_only=True, data_only=True)
+    for path in missing:
+        tab, header, sheet, n_rows = MARKER_WORKBOOKS[path]
+        rows = [list(row) for row in table[tab].iter_rows(min_row=2, values_only=True) if row and row[0] is not None]
+        rows = rows[:n_rows] if n_rows else rows
+        book = openpyxl.Workbook()
+        sheet_out = book.active
+        sheet_out.title = sheet
+        sheet_out.append(list(header))
+        for row in rows:
+            sheet_out.append(row[:len(header)])
+        path.parent.mkdir(parents=True, exist_ok=True)
+        book.save(path)
+    table.close()
+    return missing
+
+
+ensure_marker_workbooks()
+
 # Inputs the revision does not use for analysis (the project notes).
 EXCLUDED_INPUTS = (
     re.compile(r"(^|/)data/DCT/DCT_markers_V2\.xlsx$", re.I),
