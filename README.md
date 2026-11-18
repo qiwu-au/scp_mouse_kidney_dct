@@ -1,11 +1,11 @@
-# Single-cell proteomics of mouse kidney and distal convoluted tubule cells: analysis code
+# Single-cell proteomics: a powerful new tool to study kidney cell heterogeneity
 
-[author list]
+Qi Wu, Lei Cheng, Xiang Zheng, Adrienne M. Assmus, Cristina Esteva Font, Charlotte C. Petersen, Xiangning Ding, Søren R. Paludan and Robert A. Fenton
 
-Python code of the analyses of the manuscript [manuscript reference]. Archived version of this repository:
-[code DOI]. Licence: MIT.
+Python code of the analyses of this manuscript, on single-cell proteomics of mouse kidney and distal convoluted
+tubule (DCT) cells. Archived version of this repository: [code DOI]. Licence: MIT.
 
-[acknowledgement of AI assistance: to be worded by the authors]
+Claude Code (Anthropic) was used to aid the scripting of the analyses of the revised manuscript (`scripts/`).
 
 ## What is here
 
@@ -163,5 +163,5 @@ submission are not analysed in the revised paper.
 
 ## Licence and citation
 
-The code is available under the MIT licence (`LICENSE`). Please cite the manuscript, [author list],
-[manuscript reference], and the archived version of this repository, [code DOI].
+The code is available under the MIT licence (`LICENSE`). Please cite the manuscript (title and authors at the top of
+this page) and the archived version of this repository, [code DOI].
