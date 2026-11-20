@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-20-a (technical variation within the DCT experiment), one workbook.
+"""The response to the reviewers: Supplementary Table S21 (technical variation within the DCT experiment), one workbook.
 
 . The workbook holds the
 evidence of the response: the design and the cells per sort plate, technical QC by diet condition and sort plate,
@@ -18,7 +18,7 @@ What the assembly changes (all recorded per table in the sources table):
 - names: Ctrl / ZeroK -> Control / Zero-K; reader-facing names for label sets, embeddings and columns.
 
 Workbook: results/tables/report/report_20_S20a_tables.xlsx (sheet Contents, then sheets 1-6), in the
-layout of Supplementary Table S-07-d (shared code: report_table_lib.py).
+layout of Supplementary Table S7 (shared code: report_table_lib.py).
 
 Inputs (read-only): the ten dct_intake / dct_labels / dct_reviewer / zerok_vs_control tables named in SPECS.
 Outputs: the workbook; results/tables/report/report_20_s20a_table_{sources,checks}.csv;

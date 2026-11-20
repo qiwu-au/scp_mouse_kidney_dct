@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""kidney_figure2 step 2: Figure 2C-2F (submitted 2D-2G) and Supplemental Table 3 under ``kidney_t15_label``.
+"""kidney_figure2 step 2: Figure 2C-2F (submitted 2D-2G) and Supplementary Table S6 under ``kidney_t15_label``.
 
 Task kidney_figure2 (authors, 31 Oct 2026).
 
@@ -63,7 +63,7 @@ import kidney_annotation_chosen_labels as t15c     # kidney_annotation row order
 import kidney_figure2_lib as T
 
 STEP = "panels"
-TYPE_NAMES = {   # Supplemental Table 3 abbreviation sheet (draft)
+TYPE_NAMES = {   # Supplementary Table S6 abbreviation sheet (draft)
     "Endothelial": "Endothelial cells",
     "JG": "Juxtaglomerular cells",
     "PCT": "Proximal convoluted tubule",

@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-11-c (RNA comparator for the DCT data), one workbook.
+"""The response to the reviewers: Supplementary Table S14 (RNA comparator for the DCT data), one workbook.
 
 Editors' comment 1 (no scRNA-seq comparator for the DCT
 cells); plan approved by the authors on 12 Nov 2026 ("OK as proposed"). One workbook with seven sheets, built from 11
 stored tables of dct_rna (RNA comparator, combined control + zero-K search), one of atlas_dct (the split of the atlas DCT
 cells) and the value tables of the three the response to the reviewers figures. No new statistics: every value is copied from the
-stored tables. Layout and assembly code as Supplementary Tables S-07-d, S-08-d and S-09-c
+stored tables. Layout and assembly code as Supplementary Tables S7, S8 and S11
 (scripts/report_rna_protein_tables.py: build, Spec, Rules, Layout).
 
 What the assembly changes (all recorded per table in the sources table):

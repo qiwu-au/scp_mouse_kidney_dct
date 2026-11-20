@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-15-a (diffusion pseudotime in the DCT data), one workbook.
+"""The response to the reviewers: Supplementary Table S16 (diffusion pseudotime in the DCT data), one workbook.
 
 . The workbook holds the evidence of the response on what the pseudotime of the DCT data
 follows: the root cells, pseudotime against the number of proteins per cell and against the distance in protein number
@@ -7,12 +7,12 @@ from the root cell, the same ordering computed from 20 other root cells, and the
 connectivities of the marker-score groups. No new statistics here: every value is copied from the tables written by
 report_pseudotime_tabulation.py (stored dct_labels, dct_reviewer and the response to the reviewers values).
 
-Not copied (cited from Supplementary Table S-12-d, sheet 3): pseudotime by group and matrix, the group tests and the
+Not copied (cited from Supplementary Table S15, sheet 3): pseudotime by group and matrix, the group tests and the
 comparison with random cells of the same clusters. The principal components against protein number are in
-Supplementary Table S-20-a, sheet 6.
+Supplementary Table S21, sheet 6.
 
 Workbook: results/tables/report/report_15_S15a_tables.xlsx (sheet Contents, then sheets 1-4), in the layout of
-Supplementary Table S-07-d (shared code: report_table_lib.py).
+Supplementary Table S7 (shared code: report_table_lib.py).
 
 Inputs (read-only): results/tables/report/report_15_pseudotime_{roots,depth,by_quartile,other_roots,
   other_roots_summary,paga}.csv

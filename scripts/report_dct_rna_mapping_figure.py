@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-11-b - nearest Mouse Kidney Atlas class of each DCT cell, by cluster
+"""The response to the reviewers: Supplementary Figure S22 - nearest Mouse Kidney Atlas class of each DCT cell, by cluster
 label and by protein depth, and cells with cycling markers in the atlas and in the SCP-MS data.
 
 Editors' comment 1 (no scRNA-seq comparator for the DCT

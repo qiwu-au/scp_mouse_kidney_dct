@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-03-a (preprocessing sensitivity), redrawn with reader-facing names.
+"""The response to the reviewers: Supplementary Figure S2 (preprocessing sensitivity), redrawn with reader-facing names.
 
 (authors, 12 Nov 2026: "The readers will not know the revision
 process, so we only show the final products"; "Yes, remove them"). The figure of the response to the reviewers

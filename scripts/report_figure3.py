@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Figure F-08 (RNA vs protein detection and concordance) in the journal's style.
+"""The response to the reviewers: Figure 3 (RNA vs protein detection and concordance) in the journal's style.
 
 (authors, 15 Nov 2026: "Yes, redraw"; the journal's "Checklist
 for Style"). The figure of the response to the reviewers (report_rna_protein_concordance_figure) is drawn again by its own functions

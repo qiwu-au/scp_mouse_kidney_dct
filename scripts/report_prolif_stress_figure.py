@@ -1,13 +1,13 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-14-a (dissociation-stress proteins and prevalence of ProLIF cells).
+"""The response to the reviewers: Supplementary Figure S20 (dissociation-stress proteins and prevalence of ProLIF cells).
 
 . One reader-facing figure with panel letters, drawn from stored tables only (no new
 statistics here): the the response to the reviewers tables written by report_prolif_stress_tabulation.py and the stored dct_reviewer
 contrasts of the marker-score label. Control and zero-K are shown side by side, each analysed on its own; nothing
 compares the conditions.
 
-  S-14-a  (A) cells with each quantified stress-panel protein detected, by group; (B) stress score by group, for the
-          groups of Figure 3A and for the ProLIF cells of the marker-score label; (C) stress score against proteins
+  S20  (A) cells with each quantified stress-panel protein detected, by group; (B) stress score by group, for the
+          groups of Figure 4e and for the ProLIF cells of the marker-score label; (C) stress score against proteins
           identified per cell; (D) ProLIF minus reference cells, difference in stress score, unadjusted and adjusted
           for proteins per cell and sort plate (95% CI); (E) cells counted as proliferating under three definitions,
           all cells and by quartile of proteins per cell, with the Mouse Kidney Atlas DCT class (Wilson 95% CI).
@@ -17,6 +17,10 @@ Panels D and E were added inside the approved figure (the plan named A to C); re
 Reader-facing names (list of items, decisions of 12 Nov 2026): "Control" / "Zero-K"; "not resolved" for the label value
 Unknown of the cluster annotation; "marker-score label" for cs_<cond>_cluster_label; no task code, file or column
 name, and no word for the revision process in the figure (checked).
+Names of the paper (step 33, 20 Nov 2026): the groups of panel B are those of a main-figure panel. That panel is
+written here by its label (Figure 4e); the name it has in the paper is looked up in the numbering map through
+report_item_names, for the words under panel B and for the series names of the values table. A check stops
+the script if a drawn text or a series name still holds a label.
 Format (dotplot / dct_labels): Arial >= 7 pt, exact 180 mm width, PDF + 600-dpi PNG + TIFF, no in-figure title or footer.
 Helpers (axes in mm, violins, tick lines, legend, checks) are imported from report_cell_cycle_figures.py.
 
@@ -51,6 +55,7 @@ import pandas as pd
 import scp_common as cc
 import cluster_de_lib as t5
 import report_cell_cycle_figures as s12
+import report_item_names as pn
 import dct_reviewer_lib as lib
 
 lib.style()
@@ -79,6 +84,9 @@ LETTER = {
               "adj_call_dct": -0.014, "adj_score": 0.065, "either": 56, "q1": (5, 176)},
 }
 ATLAS = (217, 16381)
+# Panel B: the groups of a main-figure panel. Written with the label of that panel; drawn with its name in the paper.
+GROUPS_OF_LABEL = "groups of Figure 3A"
+GROUPS_OF = pn.paper_names(GROUPS_OF_LABEL)
 
 
 def figure(run, checks, figs, values, per_cell, detection, contrasts, stored, prevalence) -> None:
@@ -134,7 +142,7 @@ def figure(run, checks, figs, values, per_cell, detection, contrasts, stored, pr
         positions = (0, 1, 2, 3.4, 5.3, 6.7)
         for pos, (name, v, colour) in zip(positions, sets):
             s12.violin(ax, pos, v, colour)
-            part = "groups of Figure 3A" if pos < 4.5 else "marker-score label"
+            part = GROUPS_OF if pos < 4.5 else "marker-score label"
             values.append({"figure": "S-14-a", "panel": "B", "condition": cond, "series": f"{name}, {part}",
                            "x": pos, "n": int(len(v)), "value": float(np.median(v)) if len(v) else np.nan,
                            "value_name": "median stress score", "source": "report_14_prolif_stress_per_cell.csv"})
@@ -143,7 +151,7 @@ def figure(run, checks, figs, values, per_cell, detection, contrasts, stored, pr
         ax.set_yticks([-2, 0, 2])
         s12.tick_lines(ax, ah, positions, [(n, f"({len(v)})") for n, v, _ in sets])
         trans = ax.get_xaxis_transform()
-        for x0, x1, text in ((-0.4, 4.2, "groups of Figure 3A"), (4.9, 7.3, "marker-score label")):
+        for x0, x1, text in ((-0.4, 4.2, GROUPS_OF), (4.9, 7.3, "marker-score label")):
             ax.plot([x0, x1], [-8.2 / ah] * 2, transform=trans, color=DARK, linewidth=0.6, clip_on=False)
             ax.text((x0 + x1) / 2, -9.2 / ah, text, transform=trans, ha="center", va="top", fontsize=7)
         if cond == "Ctrl":
@@ -293,6 +301,13 @@ def figure(run, checks, figs, values, per_cell, detection, contrasts, stored, pr
                Line2D([], [], marker="s", linestyle="none", markersize=3.6, color=DARK,
                       label="Mouse Kidney Atlas, DCT class (E)")]
     s12.legend_row(fig, h_mm, col_x["Ctrl"], 1.4, handles)
+    drawn = [t.get_text() for t in s12.t27f.drawn_texts(fig)]
+    series = [str(v["series"]) for v in values]
+    left = pn.labels_left(drawn + series)
+    checks.add("S-14-a: names of the paper: no working label left in the drawn texts or in the series names of the "
+               "values table", f"{len(drawn)} drawn texts, {len(series)} series names; under panel B: "
+               f"{GROUPS_OF!r} ({drawn.count(GROUPS_OF)} places); labels left: {', '.join(left) or 'none'}",
+               not left and drawn.count(GROUPS_OF) == len(CONDS), "none left; one place per condition")
     s12.save(checks, figs, fig, "14_S14a_stress_prevalence",
              "S-14-a: dissociation-stress proteins and prevalence of ProLIF cells in the DCT data, control and zero-K: "
              "stress-panel protein detection (A), stress score by group (B) and against proteins per cell (C), "

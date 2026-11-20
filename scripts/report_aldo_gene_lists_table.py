@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplemental Table 2 with the ALDO lists as used for the scores of the revision.
+"""The response to the reviewers: Supplementary Table S17 with the ALDO lists as used for the scores of the revision.
 
 (authors, 12 Nov 2026, in the the response to the reviewers session: "Edit
-Supplemental Table 2 and put a copy in revision folder"). The row changes are those of the response to the reviewers, section 3e
+Supplementary Table S17 and put a copy in revision folder"). The row changes are those of the response to the reviewers, section 3e
 (results/tables/report/report_13_aldo_slc12a3.md), which the authors approved with the the response to the reviewers plan.
 
-The submitted workbook (first_submission/Supplemental Table 2.xlsx) is read only and is not changed. The revised
+The submitted workbook (first_submission/Supplementary Table S17.xlsx) is read only and is not changed. The revised
 table is a new workbook with the same sheet name, title, fonts and frozen header:
 - one list per role: aldosterone signaling (15 proteins), induced by aldosterone (44 proteins and Slc12a3),
   repressed by aldosterone (15 proteins), with the score that uses each list;
@@ -17,7 +17,11 @@ table is a new workbook with the same sheet name, title, fonts and frozen header
 No protein list is typed here: the three lists come from reviewer_core_lib and are checked against the stored dct_reviewer
 coverage table; every listed protein except Slc12a3 must be in the submitted table under the matching score.
 
-Inputs (read-only): first_submission/Supplemental Table 2.xlsx; scripts/reviewer_core_lib.py;
+Names (since 20 Nov 2026): the title, the two notes and the title property are written through
+report_item_names.paper_names, so the saved workbook names itself and the table it cites as the paper does
+(numbering map); the creator and description properties stay empty.
+
+Inputs (read-only): first_submission/Supplementary Table S17.xlsx; scripts/reviewer_core_lib.py;
   results/tables/dct_reviewer/dct_reviewer_aldo_marker_coverage.csv;
   results/tables/report/report_13_aldo_slc12a3.md (the footnote)
 Outputs: results/tables/report/report_aldo_gene_lists_table.xlsx (the revised table);
@@ -25,7 +29,7 @@ Outputs: results/tables/report/report_aldo_gene_lists_table.xlsx (the revised ta
   report_13_supplemental_table_2_checks.csv; report_step_13_supplemental_table_2_manifest.json
 
 Command (project root):  python scripts/report_aldo_gene_lists_table.py --overwrite
-The copy for the authors is revision/Supplemental Table 2.xlsx (copied by hand after the checks pass).
+The copy for the authors is revision/Supplementary Table S17.xlsx (copied by hand after the checks pass).
 """
 
 from __future__ import annotations
@@ -50,6 +54,7 @@ import pandas as pd
 from openpyxl import Workbook, load_workbook
 
 import scp_common as cc
+import report_item_names as pn
 import reviewer_core_lib as t2
 
 TASK = "report"
@@ -231,26 +236,27 @@ def main() -> None:
     wb = Workbook()
     ws = wb.active
     ws.title = style["sheet"]
-    ws.cell(row=1, column=1, value=style["title"]).font = style["title_font"]
+    ws.cell(row=1, column=1, value=pn.paper_names(style["title"])).font = style["title_font"]   # name of the paper
     if style["title_height"]:
         ws.row_dimensions[1].height = style["title_height"]
     for j, name in enumerate(HEADER, 1):
-        c = ws.cell(row=3, column=j, value=name)
+        c = ws.cell(row=3, column=j, value=pn.named(name))
         c.font, c.alignment = copy(style["head_font"]), copy(style["head_alignment"])
     for i, r in table.iterrows():
         for j, name in enumerate(HEADER, 1):
             value = r[name]
-            c = ws.cell(row=4 + i, column=j, value=None if value is None or pd.isna(value) else value)
+            c = ws.cell(row=4 + i, column=j, value=None if value is None or pd.isna(value) else pn.named(value))
             c.font = copy(style["body_font"])
     note_row = 4 + len(table) + 1
     for k, text in enumerate((SCORE_NOTE, footnote)):
-        ws.cell(row=note_row + k, column=1, value=text).font = copy(style["body_font"])
+        ws.cell(row=note_row + k, column=1, value=pn.paper_names(text)).font = copy(style["body_font"])
     for col, width in WIDTHS.items():
         ws.column_dimensions[col].width = width
     ws.freeze_panes = style["freeze"]
-    wb.properties.title = "Supplemental Table 2"
-    wb.properties.creator = cc.GENERATED_BY
-    wb.properties.description = f"{cc.GENERATED_TAG}; {cc.rel(cc.SCRIPTS_DIR / 'report_aldo_gene_lists_table.py')}"
+    # title: the name the table has in the paper; creator and description stay empty (the script is in the manifest)
+    wb.properties.title = pn.paper_names("Supplemental Table 2")
+    wb.properties.creator = ""                   # an empty element; None would be written as the name of the library
+    wb.properties.description = None
     wb.save(out)
     run.outputs.append(cc.rel(out))
     print(f"Saved workbook: {cc.rel(out)}")
@@ -264,14 +270,19 @@ def main() -> None:
     process = [t[:60] for t in texts if PROCESS_WORDS.search(t)]
     check(checks, "workbook read back: one sheet named as in the submitted file, same title, header in row 3, the 75 "
           "rows equal the table, two note lines under the table, panes frozen at A4",
-          f"sheets {back.sheetnames}; title equal {bs.cell(row=1, column=1).value == style['title']}; "
+          f"sheets {back.sheetnames}; title equal {bs.cell(row=1, column=1).value == pn.paper_names(style['title'])}; "
           f"rows equal {stored == want}; notes in rows {note_row} and {note_row + 1}", "all equal",
-          back.sheetnames == [style["sheet"]] and bs.cell(row=1, column=1).value == style["title"]
+          back.sheetnames == [style["sheet"]] and bs.cell(row=1, column=1).value == pn.paper_names(style["title"])
           and [bs.cell(row=3, column=j).value for j in range(1, 6)] == HEADER and stored == want
-          and bs.cell(row=note_row, column=1).value == SCORE_NOTE and bs.cell(row=note_row + 1, column=1).value == footnote
+          and bs.cell(row=note_row, column=1).value == pn.paper_names(SCORE_NOTE)
+          and bs.cell(row=note_row + 1, column=1).value == pn.paper_names(footnote)
           and bs.freeze_panes == "A4" and bs.max_row == note_row + 1)
     check(checks, "footnote equals the footnote of the response to the reviewers, section 3e", footnote[:70] + " ...", "equal",
-          bs.cell(row=note_row + 1, column=1).value == footnote and footnote.startswith("Slc12a3 was added"))
+          bs.cell(row=note_row + 1, column=1).value == pn.paper_names(footnote) and footnote.startswith("Slc12a3 was added"))
+    left = pn.labels_left({back.properties.title or "", *back.sheetnames, *texts})
+    check(checks, "names of the paper: no cell, sheet name or title of the saved workbook names a figure or a table by "
+          "its working label (numbering map and panel table of report_item_names)",
+          "; ".join(left[:12]) or f"none in {len(texts)} cells", "none", not left)
     check(checks, "no cell names the revision process or a fallback panel (submitted, submission, re-annotation, "
           "fallback, tool names)", process or f"0 of {len(texts)} cells", "0", not process)
     empty_words = [t for t in texts if t.strip().lower() in ("", "nan", "none", "null")]

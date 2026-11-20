@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-09-c (Slc12a1 and Aqp2 as negative markers, DCT data), one workbook.
+"""The response to the reviewers: Supplementary Table S11 (Slc12a1 and Aqp2 as negative markers, DCT data), one workbook.
 
-The authors asked on 12 Nov 2026 to assemble Supplementary
-Tables S-08-d and S-09-c ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S-09-c: one workbook
+The authors asked on 12 Nov 2026 to assemble Supplementary Tables S8 and S11 ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S11: one workbook
 with six sheets, built from 18 stored tables (10 tables of the response to the reviewers, 8 tables of dct_reviewer). DCT data of the combined
 control + zero-K search only. No new statistics: every value is copied from the stored tables, and no row is
-dropped. The layout follows Supplementary Table S-07-d; the assembly code is imported from
+dropped. The layout follows Supplementary Table S7; the assembly code is imported from
 scripts/report_rna_protein_tables.py (build, Spec, Rules, Layout).
 
 What the assembly changes (all recorded per table in the sources table):

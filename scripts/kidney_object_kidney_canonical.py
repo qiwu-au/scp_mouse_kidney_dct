@@ -5,7 +5,7 @@
 
 Inputs (read-only; kidney V3 only):
   data/KIDNEY/KIDNEY_768cells.csv               raw Spectronaut intensities (768 cells)
-  data/KIDNEY/KIDNEY_markers_V3.xlsx            V3 markers (Supplemental Table 1, kidney tab)
+  data/KIDNEY/KIDNEY_markers_V3.xlsx            V3 markers (Supplementary Table S2, kidney tab)
   data/KIDNEY/V3/SENS_DYNR_per_cell_Leiden_2.0.csv
                                            submitted labels: cell_type_v2 (after re-annotation, Fig 2B)
                                            and cell_type_pre (before re-annotation, Fig 2A)

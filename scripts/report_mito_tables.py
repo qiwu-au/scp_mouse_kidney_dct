@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-02-d (mitochondrial metrics), one workbook with seven sheets.
+"""The response to the reviewers: Supplementary Table S3 (mitochondrial metrics), one workbook with seven sheets.
 
-The authors asked on 12 Nov 2026 to assemble Supplementary
-Tables S-01-a, S-02-d and S-03-b ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S-02-d: (1)
+The authors asked on 12 Nov 2026 to assemble Supplementary Tables S9, S3 and S1 ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S3: (1)
 per-cell metrics and flags, kidney and DCT; (2) summary by label; (3) variance explained; (4) global cutoffs and
 tests; (5) within-label correlations; (6) removed against retained wells and flags by metric; (7) exclusion sets
 and outcomes against random removals, including the ProLIF rows. It is built from 29 stored tables (qc_mito, kidney_annotation
@@ -29,7 +28,7 @@ contrasts (2d) and the ProLIF flag table (6h). One infinite odds ratio (table 6h
 text inf, because a workbook cannot hold an infinite number.
 
 Workbook: results/tables/report/report_02_S02d_tables.xlsx (sheet Contents, then sheets 1-7), in the
-layout of Supplementary Table S-07-d (shared code: report_table_lib.py).
+layout of Supplementary Table S7 (shared code: report_table_lib.py).
 
 Inputs (read-only): the 29 tables named in SPECS and the kidney_annotation label table.
 Outputs: the workbook; results/tables/report/report_02_s02d_table_{sources,checks}.csv;

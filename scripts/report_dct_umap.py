@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-"""The response to the reviewers: revised Figure 3A with the key label "DCT, subtype not resolved".
+"""The response to the reviewers: revised Figure 4e with the key label "DCT, subtype not resolved".
 
 
 
 Request:
-  - authors, 12 Nov 2026, via the response to the reviewers: "Yes, rename there". In reader-facing text and in Figures 3A and 3B, the DCT
+  - authors, 12 Nov 2026, via the response to the reviewers: "Yes, rename there". In reader-facing text and in Figures 4e and 4f, the DCT
     cells of clusters without marker support (dct_labels label value 'Unknown') are called "DCT, subtype not resolved".
-  - authors, 12 Nov 2026, the response to the reviewers: "Yes, draw it" (a report copy of Figure 3A; the committed dct_prolif and dct_labels files stay).
+  - authors, 12 Nov 2026, the response to the reviewers: "Yes, draw it" (a report copy of Figure 4e; the committed dct_prolif and dct_labels files stay).
 
 Source figure:
   results/figures/dct_prolif/dct_prolif_prolif_overlay_nofloor_ctrl_85mm, drawn by
@@ -15,9 +15,9 @@ Source figure:
 
 Changes (display only):
   - The key reads "DCT, subtype not resolved (251)" instead of "Unknown (251)". The text is dct_prolif_lib.UNRESOLVED,
-    the same as the Figure 3B row.
+    the same as the Figure 4f row.
   - There is no title. The source title held the internal run name "no floor". One plot per file, as in the kidney_figure2
-    Figure 2 files and Figure 3B.
+    Figure 2 files and Figure 4f.
 Unchanged:
   - cells, groups, counts and colours (the not-resolved group keeps the grey of 'Unknown');
   - coordinates: X_umap of the dct_labels labelled object;
@@ -80,7 +80,7 @@ PRIMARY = "cs_ctrl_deg_label"            # dct_labels Ctrl primary (the project 
 DCT_PROLIF_COL = "cs_t31nf_label"               # dct_prolif no-floor run; route-A ProLIF only is used
 UNKNOWN = ov31.UNKNOWN                   # dct_labels label value 'Unknown'
 EXPECTED = {t31.DCT1: 362, t31.DCT2: 79, t31.PROLIF: 37, UNKNOWN: 251}   # source figure (dct_prolif README section 16)
-PROLIF_BY_DCT_LABELS = {t31.DCT1: 20, t31.DCT2: 6, UNKNOWN: 11}                  # Figure 3A legend draft
+PROLIF_BY_DCT_LABELS = {t31.DCT1: 20, t31.DCT2: 6, UNKNOWN: 11}                  # Figure 4e legend draft
 DISPLAY = {UNKNOWN: t31.UNRESOLVED}      # display only (authors, 12 Nov 2026); data keep 'Unknown'
 
 
@@ -117,7 +117,7 @@ def main() -> None:
     run = cc.Run(TASK, STEP, args)
     checks = t5.Checks("dct_ctrl_combined")
 
-    # --- Figure 3A groups (dct_prolif overlay table, the source of the dct_prolif figure) --------------------------------------
+    # --- Figure 4e groups (dct_prolif overlay table, the source of the dct_prolif figure) --------------------------------------
     ov = pd.read_csv(run.use_input(DCT_PROLIF_OVERLAY, "dct_prolif overlay per cell (Figure 3A groups and coordinates)"),
                      dtype={"cell_id": str})
     ov = ov[(ov["run"] == "nofloor") & (ov["condition"] == "Ctrl")].set_index("cell_id")

@@ -10,14 +10,14 @@ Design shown in every legend (not in the figures): one pool of 3 mice per condit
 be separated, cells are not animal-level replicates and every p value is descriptive; P1 and P2 are sort plates of
 the pooled cells (technical).
 
-Main figure F-19 (placeholder), single plots without panel letters (report addendum of 12 Nov 2026):
+Figure 5 (placeholder), single plots without panel letters (report addendum of 12 Nov 2026):
   report_19_fig_panel_effects   180 mm  the 8 panel proteins with an expected direction, DCT1 + DCT2 cells of
                                             the cluster annotation (467 control, 449 zero-K): detection, intensity
                                             among detected cells, mean-intensity ratio per sort plate, observed
                                             direction and match
   report_19_fig_matched_sets     85 mm  the 7 directional panel proteins against 10,000 matched random sets
   report_19_fig_F19_compiled    180 mm  the two plots as one file with the letters A and B (authors, 12 Nov 2026:
-                                            "Compile F-19"); drawn by the same code at the same size, A above B
+                                            "Compile Figure 5"); drawn by the same code at the same size, A above B
 Supplementary figures, one assembled file each, with panel letters:
   report_19_S19a_zerok_annotation   A, B zero-K UMAP by cluster annotation and by the label transferred from
                                         control cells; C label fractions; D cells with cycling proteins
@@ -109,7 +109,7 @@ CONTRAST = {"Ctrl P2 vs P1": "Control, P2 vs P1", "ZeroK P2 vs P1": "Zero-K, P2 
 BANNED = ("ctrl", "zerok", "unknown", "generated", "pipeline", "primary", "alternative", "submitted",
           "label-free", "label_free", "_", ".csv", "t27", "t30", "frozen")
 VALUES: list[dict] = []
-RECORD = True                       # False while the compiled Figure F-19 repeats the two plots (values recorded once)
+RECORD = True                       # False while the compiled Figure 5 repeats the two plots (values recorded once)
 TEXTS: dict[str, list[str]] = {}    # drawn texts of every saved figure (filled by save)
 PANEL_PITCH, PANEL_TOP = 4.4, 12.0
 PANEL_H = PANEL_TOP + len(PROT) * PANEL_PITCH + 21.0        # 68.2 mm: height of the panel-effects plot
@@ -197,7 +197,7 @@ def pick(frame: pd.DataFrame, **where) -> pd.DataFrame:
 
 
 # ---------------------------------------------------------------------------
-# Main figure F-19
+# Figure 5
 # ---------------------------------------------------------------------------
 def draw_panel(sheet, T, name: str, checks) -> None:
     """The panel-effects plot on a sheet (or a region of one); 180 x PANEL_H mm."""
@@ -330,7 +330,7 @@ def fig_matched(run, T, rows, checks) -> bool:
 
 
 def fig_compiled(run, T, rows, checks) -> bool:
-    """Figure F-19 as one file (authors, 12 Nov 2026: "Compile F-19"): the two plots above, drawn by the same code at
+    """Figure 5 as one file (authors, 12 Nov 2026: "Compile Figure 5"): the two plots above, drawn by the same code at
     the same size on one 180 mm page, A above B, with panel letters. Values are those of the two single plots."""
     global RECORD
     name = "19_fig_F19_compiled"
@@ -365,7 +365,7 @@ def fig_compiled(run, T, rows, checks) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# S-19-a: zero-K annotation, label fractions, cycling proteins
+# S25: zero-K annotation, label fractions, cycling proteins
 # ---------------------------------------------------------------------------
 def fig_s19a(run, T, rows, checks) -> bool:
     name = "19_S19a_zerok_annotation"
@@ -454,7 +454,7 @@ def fig_s19a(run, T, rows, checks) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# S-19-b: every panel item in every group and normalization variant; robustness
+# S27: every panel item in every group and normalization variant; robustness
 # ---------------------------------------------------------------------------
 def fig_s19b(run, T, rows, checks, items: list[str], low: tuple[str, ...]) -> bool:
     name = "19_S19b_panel_overview"
@@ -561,7 +561,7 @@ def fig_s19b(run, T, rows, checks, items: list[str], low: tuple[str, ...]) -> bo
 
 
 # ---------------------------------------------------------------------------
-# S-19-c: specificity and the sort-plate null
+# S28: specificity and the sort-plate null
 # ---------------------------------------------------------------------------
 def fig_s19c(run, T, rows, checks) -> bool:
     name = "19_S19c_specificity"
@@ -667,7 +667,7 @@ def fig_s19c(run, T, rows, checks) -> bool:
 
 
 # ---------------------------------------------------------------------------
-# S-19-d: bulk low-K whole-kidney proteome
+# S26: bulk low-K whole-kidney proteome
 # ---------------------------------------------------------------------------
 def side_labels(ax, points: list[tuple[str, float, float]], gap_mm: float = 3.6) -> None:
     """Names in a column right of the axes, sorted by y and spread apart, joined to their points by lines (zerok_vs_control)."""

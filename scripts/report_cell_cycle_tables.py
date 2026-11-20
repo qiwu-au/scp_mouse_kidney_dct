@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-12-d (ProLIF and the cell cycle in the DCT data), one workbook.
+"""The response to the reviewers: Supplementary Table S15 (ProLIF and the cell cycle in the DCT data), one workbook.
 
 . One workbook with a Contents sheet and seven data sheets, built from 22 stored tables: 10 of
 dct_reviewer (cell-cycle correction, pseudotime, depth and plate, ALDO scores), 3 of dct_prolif (per-cell proliferation test) and 9
@@ -46,6 +46,7 @@ if __name__ == "__main__":
 import argparse
 
 import scp_common as cc
+import report_item_names as pn
 import report_table_lib as lib
 from report_table_lib import CONDITION, MARKER_SCORE, UNKNOWN_NOTE, Spec, WorkbookDef, _pick
 
@@ -343,7 +344,8 @@ LETTER = [
 
 def extra_checks(frames: dict, stored: dict, checks: list) -> None:
     cells = stored["7a"]
-    got = {c: cells.loc[cells["condition"].eq(c), "figure_3a_group"].value_counts().to_dict()
+    group = pn.paper_names("figure_3a_group")     # the column as the workbook names it (panel of the paper)
+    got = {c: cells.loc[cells["condition"].eq(c), group].value_counts().to_dict()
            for c in ("Control", "Zero-K")}
     expected = {"Control": {"DCT1": 362, "DCT2": 79, "ProLIF": 37, "Unknown": 251},
                 "Zero-K": {"DCT1": 402, "ProLIF": 63, "Unknown": 237}}

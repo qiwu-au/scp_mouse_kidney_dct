@@ -7,11 +7,11 @@ reads the per-cell and test tables of qc_mito, kidney_annotation (addendum) and 
 
 Why it exists:
 1. The qc_mito kidney figures use the submitted labels; no figure shows these metrics under `kidney_t15_label`, the one
-   kidney annotation of the revision (authors, 30 Oct 2026). Supplementary Figure S-02-a is drawn here.
+   kidney annotation of the revision (authors, 30 Oct 2026). Supplementary Figure S3 is drawn here.
 2. qc_mito, kidney_annotation and dct_reviewer count mito flags per label, not per metric. The letter needs the split: which metric raised the
    flags, and how many of those cells are also low on depth.
 
-Figure S-02-a (one page, 180 mm; no in-figure title or footnote, the legend text is in the the response to the reviewers file; rows
+Supplementary Figure S3 (one page, 180 mm; no in-figure title or footnote, the legend text is in the the response to the reviewers file; rows
 shared by all panels; display names DCT and CNT/PC):
 A. MitoCarta fraction of summed intensity per cell type (cells, median and IQR) and the global top-10% cutoff.
 B. Percentage of each cell type above that cutoff (kidney_annotation addendum simulation; no cell excluded).

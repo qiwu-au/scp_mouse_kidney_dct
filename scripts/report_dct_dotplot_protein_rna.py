@@ -1,14 +1,14 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Figure 3B with RNA rows - the DCT marker proteins of Figure 3B above their transcripts in
+"""The response to the reviewers: Figure 4f with RNA rows - the DCT marker proteins of Figure 4f above their transcripts in
 the Mouse Kidney Atlas.
 
 Editors' comment 1 (no scRNA-seq comparator for the DCT
-cells). Plan approved by the authors on 12 Nov 2026 ("OK as proposed"): Figure 3B gains RNA rows under the protein
+cells). Plan approved by the authors on 12 Nov 2026 ("OK as proposed"): Figure 4f gains RNA rows under the protein
 rows, with the same 13 markers, as Figure 2B does for the kidney. This is a new the response to the reviewers file; the the response to the reviewers panel
 (report_06_fig3b_dotplot_85mm) is not changed and stays the fallback.
 
 No new statistics: both halves are drawn from stored values.
-- Protein (top): the four groups of Figure 3A (control cells of the combined search) and the 13 panel markers, read
+- Protein (top): the four groups of Figure 4e (control cells of the combined search) and the 13 panel markers, read
   from results/tables/report/report_06_fig3b_dotplot_values.csv. The row of the dct_labels label value
   'Unknown' is shown as "DCT, subtype not resolved" (authors, 12 Nov 2026); the values keep 'Unknown'.
 - RNA (bottom): the atlas classes DCT, DCT-CNT, CNT, CTAL and MTAL (atlas level Celltype; all cells and nuclei), the
@@ -16,7 +16,7 @@ No new statistics: both halves are drawn from stored values.
   rna_source 'all'). Trpv5 is not among the atlas genes (grey column).
 Encoding as Figure 2B (kidney_figure2_fig2b_full.py): dot area = fraction of cells with intensity > 0 (protein) or at
 least one count (RNA); colour = group mean scaled 0-1 per marker across the rows of its own half. Arial >= 7 pt,
-exact 85 mm width (Figure 3A is 85 mm), PDF + 600-dpi PNG + LZW TIFF, no panel letter, no footer.
+exact 85 mm width (Figure 4e is 85 mm), PDF + 600-dpi PNG + LZW TIFF, no panel letter, no footer.
 
 Inputs (read-only): the two value tables above.
 Outputs: results/figures/report/report_11_fig3b_protein_rna_85mm.{pdf,png,tif};
@@ -56,9 +56,9 @@ TASK = "report"
 STEP = "11_fig3b_protein_rna"
 PROTEIN_VALUES = cc.OUT_ROOTS["tables"] / TASK / "report_06_fig3b_dotplot_values.csv"
 RNA_VALUES = cc.OUT_ROOTS["tables"] / "dct_rna" / "dct_rna_dotplot_rna_values.csv"
-ROWS = ["DCT1", "DCT2", "ProLIF", "Unknown"]                        # Figure 3A groups
+ROWS = ["DCT1", "DCT2", "ProLIF", "Unknown"]                        # Figure 4e groups
 EXPECTED = {"DCT1": 362, "DCT2": 79, "ProLIF": 37, "Unknown": 251}
-ROW_COLOURS = {"DCT1": "#1f77b4", "DCT2": "#ff7f0e", "ProLIF": "#2ca02c", "Unknown": "#B3B3B3"}   # Figure 3A
+ROW_COLOURS = {"DCT1": "#1f77b4", "DCT2": "#ff7f0e", "ProLIF": "#2ca02c", "Unknown": "#B3B3B3"}   # Figure 4e
 WIDTH = 85.0
 
 

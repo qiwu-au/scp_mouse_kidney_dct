@@ -6,7 +6,7 @@ Task kidney_figure2 (authors, 31 Oct 2026).
 The submitted Figure 2B (re-annotation UMAP) is removed, so the revised Figure 2 is lettered A-F (authors, 31 Oct 2026):
 - 2A: UMAP of the 712 retained kidney cells (stored ``X_umap`` of the kidney_object object, the submitted Figure 2A layout),
   coloured by ``kidney_t15_label`` (display names DCT, CNT/PC). Leiden cluster numbers are kept, small (link to the
-  per-cluster evidence table S-05-a), and the one cluster labelled from shared markers only (cluster 21, PST) is drawn
+  per-cluster evidence table S4), and the one cluster labelled from shared markers only (cluster 21, PST) is drawn
   hollow (both authors, 31 Oct 2026). Unknown cells are small grey dots. Redrawn here because the kidney_annotation figure holds three
   panels, a title and a footer, and its numbers and key are below 5 pt at 88 mm.
 - 2B (was 2C): the paired protein / RNA marker dotplot of kidney_rna (``dotplot_t15_main_all``), redrawn from the stored

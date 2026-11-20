@@ -29,7 +29,7 @@ scripts/kidney_rna_paired_figures.py,kidney_rna,run step,27,kidney: RNA atlas co
 scripts/kidney_annotation_endothelial_detection.py,kidney_annotation,run step,28,kidney: cluster annotation,,"reads the output of: kidney_object_kidney_canonical.py, kidney_annotation_atlas_reference.py"
 scripts/kidney_figure2_fig2ab.py,kidney_figure2,run step,29,kidney: Figure 2 panels,Figure 2a (panel),"reads the output of: kidney_object_kidney_canonical.py, kidney_rna_dotplots.py, kidney_annotation_chosen_labels.py"
 scripts/kidney_figure2_fig2b_full.py,kidney_figure2,run step,30,kidney: Figure 2 panels,Figure 2b (panel); Supplementary Figure S5,"reads the output of: kidney_object_kidney_canonical.py, kidney_rna_dotplots.py, kidney_annotation_chosen_labels.py"
-scripts/kidney_figure2_panels.py,kidney_figure2,run step,31,kidney: Figure 2 panels,Figure 2c to 2f (panels); Supplementary Table S6,also needs: kidney: stored embedding object or tables of the first-submission analysis
+scripts/kidney_figure2_panels.py,kidney_figure2,run step,31,kidney: Figure 2 panels,"Figures 2c, 2d, 2e and 2f (panels); Supplementary Table S6",also needs: kidney: stored embedding object or tables of the first-submission analysis
 scripts/atlas_dct_atlas_subset.py,atlas_dct,run step,32,RNA atlas: DCT subset and DCT1/DCT2 split; library of the DCT RNA comparison,,reads the output of: kidney_rna_atlas_summary.py
 scripts/atlas_dct_dct_split.py,atlas_dct,run step,33,RNA atlas: DCT subset and DCT1/DCT2 split; library of the DCT RNA comparison,,reads the output of: atlas_dct_atlas_subset.py
 scripts/pt_tal_subsets.py,pt_tal,run step,34,kidney: PT and TAL subtypes,,reads the output of: kidney_object_kidney_canonical.py
@@ -109,10 +109,10 @@ scripts/report_mito_kidney_figure.py,report,run step,107,figures and tables of t
 scripts/report_mito_dct_figure.py,report,run step,108,figures and tables of the manuscript and the supplement,Supplementary Figure S19,reads the output of: report_mito_kidney_figure.py
 scripts/report_qc_exclusion_figure.py,report,run step,109,figures and tables of the manuscript and the supplement,Supplementary Figure S4,"reads the output of: kidney_annotation_chosen_labels.py, kidney_annotation_kidney_sensitivity.py"
 scripts/report_mito_tables.py,report,run step,110,figures and tables of the manuscript and the supplement,Supplementary Table S3,"reads the output of: qc_mito_mito_qc.py, qc_mito_mito_tests.py, qc_mito_mitocarta.py, kidney_annotation_addenda.py"
-scripts/report_preprocessing_scores.py,report,run step,111,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S2 and Table S1,"reads the output of: kidney_object_kidney_canonical.py, preprocessing_sensitivity.py, preprocessing_spectronaut_quantity.py, preprocessing_summary_figures.py"
+scripts/report_preprocessing_scores.py,report,run step,111,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S2 and Supplementary Table S1,"reads the output of: kidney_object_kidney_canonical.py, preprocessing_sensitivity.py, preprocessing_spectronaut_quantity.py, preprocessing_summary_figures.py"
 scripts/report_preprocessing_figure.py,report,run step,112,figures and tables of the manuscript and the supplement,Supplementary Figure S2,reads the output of: report_preprocessing_scores.py
 scripts/report_preprocessing_tables.py,report,run step,113,figures and tables of the manuscript and the supplement,Supplementary Table S1,"reads the output of: preprocessing_sensitivity.py, report_preprocessing_scores.py"
-scripts/report_dct_umap.py,report,run step,114,figures and tables of the manuscript and the supplement,Figure 4a (panel),public inputs and earlier steps
+scripts/report_dct_umap.py,report,run step,114,figures and tables of the manuscript and the supplement,Figure 4e (panel),public inputs and earlier steps
 scripts/report_annotation_tables.py,report,run step,115,figures and tables of the manuscript and the supplement,Supplementary Table S10,"reads the output of: cluster_de_deg_annotation.py, kidney_annotation_rankfree_sensitivity.py, kidney_annotation_rare_candidates.py, kidney_annotation_resolution_scan.py"
 scripts/report_resolution_scan_figure.py,report,run step,116,figures and tables of the manuscript and the supplement,Supplementary Figure S13,"reads the output of: kidney_annotation_chosen_labels.py, kidney_annotation_rankfree_sensitivity.py, kidney_annotation_v3_endothelial.py"
 scripts/report_dct_dotplot.py,report,run step,117,figures and tables of the manuscript and the supplement,values in Supplementary Table S5,public inputs and earlier steps
@@ -123,37 +123,38 @@ scripts/report_pt_tal_tables.py,report,run step,121,figures and tables of the ma
 scripts/report_integration_figures.py,report,run step,122,figures and tables of the manuscript and the supplement,Supplementary Figures S9 to S11,"reads the output of: kidney_object_kidney_canonical.py, kidney_rna_mapping_table.py, rna_protein_integration_diagnostics.py, rna_protein_integration_integrate.py"
 scripts/report_rna_protein_concordance_figure.py,report,run step,123,figures and tables of the manuscript and the supplement,Figure 3 (panels),"reads the output of: kidney_rna_concordance.py, kidney_rna_paired_figures.py"
 scripts/report_rna_protein_tables.py,report,run step,124,figures and tables of the manuscript and the supplement,Supplementary Table S8,"reads the output of: kidney_rna_atlas_summary.py, kidney_rna_concordance.py, kidney_rna_mapping_table.py, kidney_rna_paired_figures.py"
-scripts/report_negative_markers_exclusion.py,report,run step,125,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S14 and Table S11,public inputs and earlier steps
-scripts/report_negative_markers_depth_null.py,report,run step,126,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S14 and Table S11,public inputs and earlier steps
+scripts/report_negative_markers_exclusion.py,report,run step,125,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S14 and Supplementary Table S11,public inputs and earlier steps
+scripts/report_negative_markers_depth_null.py,report,run step,126,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S14 and Supplementary Table S11,public inputs and earlier steps
 scripts/report_negative_markers_figure.py,report,run step,127,figures and tables of the manuscript and the supplement,Supplementary Figure S14,public inputs and earlier steps
 scripts/report_dct_marker_scores_figure.py,report,run step,128,figures and tables of the manuscript and the supplement,Supplementary Figure S15,public inputs and earlier steps
 scripts/report_negative_markers_tables.py,report,run step,129,figures and tables of the manuscript and the supplement,Supplementary Table S11,public inputs and earlier steps
-scripts/report_umod_evidence.py,report,run step,130,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S17 and Table S12,reads the output of: kidney_annotation_chosen_labels.py
+scripts/report_umod_evidence.py,report,run step,130,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S17 and Supplementary Table S12,reads the output of: kidney_annotation_chosen_labels.py
 scripts/report_umod_figure.py,report,run step,131,figures and tables of the manuscript and the supplement,Supplementary Figure S17,reads the output of: kidney_annotation_chosen_labels.py
 scripts/report_umod_tables.py,report,run step,132,figures and tables of the manuscript and the supplement,Supplementary Table S12,reads the output of: kidney_annotation_chosen_labels.py
-scripts/report_dct_dotplot_protein_rna.py,report,run step,133,figures and tables of the manuscript and the supplement,Figure 4b (panel),reads the output of: dct_rna_dotplot.py
+scripts/report_dct_dotplot_protein_rna.py,report,run step,133,figures and tables of the manuscript and the supplement,Figure 4f (panel),reads the output of: dct_rna_dotplot.py
 scripts/report_dct_rna_markers_figure.py,report,run step,134,figures and tables of the manuscript and the supplement,Supplementary Figure S21,"reads the output of: dct_rna_dotplot.py, dct_rna_pseudobulk_correlation.py"
 scripts/report_dct_rna_mapping_figure.py,report,run step,135,figures and tables of the manuscript and the supplement,Supplementary Figure S22,reads the output of: dct_rna_cycling.py
 scripts/report_dct_rna_tables.py,report,run step,136,figures and tables of the manuscript and the supplement,Supplementary Table S14,"reads the output of: atlas_dct_dct_split.py, report_dct_rna_mapping_figure.py, dct_rna_cycling.py"
-scripts/report_prolif_percell_tabulation.py,report,run step,137,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S18 and Table S15,public inputs and earlier steps
+scripts/report_prolif_percell_tabulation.py,report,run step,137,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S18 and Supplementary Table S15,public inputs and earlier steps
 scripts/report_aldo_random_sets.py,report,run step,138,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S24,public inputs and earlier steps
 scripts/report_cell_cycle_figures.py,report,run step,139,figures and tables of the manuscript and the supplement,"Supplementary Figures S18, S23 and S24",public inputs and earlier steps
 scripts/report_cell_cycle_tables.py,report,run step,140,figures and tables of the manuscript and the supplement,Supplementary Table S15,public inputs and earlier steps
 scripts/report_aldo_gene_lists_table.py,report,run step,141,figures and tables of the manuscript and the supplement,Supplementary Table S17,also needs: text of the response to the reviewers
-scripts/report_prolif_stress_tabulation.py,report,run step,142,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S20 and Table S13,reads the output of: dct_rna_cycling.py
+scripts/report_prolif_stress_tabulation.py,report,run step,142,figures and tables of the manuscript and the supplement,analysis behind Supplementary Figure S20 and Supplementary Table S13,reads the output of: dct_rna_cycling.py
 scripts/report_prolif_stress_figure.py,report,run step,143,figures and tables of the manuscript and the supplement,Supplementary Figure S20,reads the output of: report_prolif_stress_tabulation.py
 scripts/report_prolif_stress_tables.py,report,run step,144,figures and tables of the manuscript and the supplement,Supplementary Table S13,reads the output of: report_prolif_stress_tabulation.py
 scripts/report_pseudotime_tabulation.py,report,run step,145,figures and tables of the manuscript and the supplement,analysis behind Supplementary Table S16,public inputs and earlier steps
 scripts/report_pseudotime_tables.py,report,run step,146,figures and tables of the manuscript and the supplement,Supplementary Table S16,public inputs and earlier steps
 scripts/report_zerok_tables.py,report,run step,147,figures and tables of the manuscript and the supplement,Supplementary Table S18,also needs: pre-specified panel table of the diet comparison
-scripts/report_zerok_figures.py,report,run step,148,figures and tables of the manuscript and the supplement,Figure 5 (panels); Supplementary Figures S25 to S28,also needs: pre-specified panel table of the diet comparison
-scripts/report_plate_tables.py,report,run step,149,figures and tables of the manuscript and the supplement,Supplementary Table S20,"reads the output of: zerok_vs_control_design.py, zerok_vs_control_specificity.py"
+scripts/report_zerok_figures.py,report,run step,148,figures and tables of the manuscript and the supplement,"Figure 5 (panels); Supplementary Figures S25, S26, S27 and S28",also needs: pre-specified panel table of the diet comparison
+scripts/report_plate_tables.py,report,run step,149,figures and tables of the manuscript and the supplement,Supplementary Table S21,"reads the output of: zerok_vs_control_design.py, zerok_vs_control_specificity.py"
 scripts/report_annotation_evidence.py,report,run step,150,figures and tables of the manuscript and the supplement,Supplementary Table S4,"reads the output of: kidney_annotation_chosen_labels.py, kidney_annotation_resolution_scan.py"
 scripts/report_figure2_layout.py,report,run step,151,figures and tables of the manuscript and the supplement,,
 scripts/report_figure2.py,report,run step,152,figures and tables of the manuscript and the supplement,Figure 2,also needs: output of a step that is not part of this release: results/figures/report/report_fig2_compiled.pdf; output of a step that is not part of this release: results/figures/report/report_fig2_compiled.png
-scripts/report_figure4.py,report,run step,153,figures and tables of the manuscript and the supplement,Figure 4,"reads the output of: report_dct_dotplot_protein_rna.py, dct_rna_dotplot.py"
+scripts/report_figure4.py,report,run step,153,figures and tables of the manuscript and the supplement,"Figure 4e and 4f (panels, journal style)","reads the output of: report_dct_dotplot_protein_rna.py, dct_rna_dotplot.py"
 scripts/report_figure3.py,report,run step,154,figures and tables of the manuscript and the supplement,Figure 3,"reads the output of: kidney_rna_concordance.py, kidney_rna_paired_figures.py, report_rna_protein_concordance_figure.py"
-scripts/report_figure5.py,report,run step,155,figures and tables of the manuscript and the supplement,Figure 5,also needs: pre-specified panel table of the diet comparison
+scripts/report_figure5.py,report,run step,155,figures and tables of the manuscript and the supplement,"Figure 5a and 5b (panels, journal style)",also needs: pre-specified panel table of the diet comparison
+scripts/report_figures4_5_extended.py,report,run step,156,figures and tables of the manuscript and the supplement,Figures 4 and 5 (all panels); Supplementary Figure S26 (two panels),also needs: pre-specified panel table of the diet comparison
 scripts/atlas_dct_cell_mapping.py,atlas_dct,"library (earlier version of a step; imported, not run)",,RNA atlas: DCT subset and DCT1/DCT2 split; library of the DCT RNA comparison,,
 scripts/atlas_dct_cycling.py,atlas_dct,"library (earlier version of a step; imported, not run)",,RNA atlas: DCT subset and DCT1/DCT2 split; library of the DCT RNA comparison,,
 scripts/atlas_dct_dotplot.py,atlas_dct,"library (earlier version of a step; imported, not run)",,RNA atlas: DCT subset and DCT1/DCT2 split; library of the DCT RNA comparison,,
@@ -216,6 +217,7 @@ scripts/qc_mito_sensitivity.py,qc_mito,library,,"QC: MitoCarta fraction, stress 
 scripts/rat_segments_lib.py,rat_segments,library,,kidney: rat segment proteome comparison,,
 scripts/report_dct_rna_lib.py,report,library,,figures and tables of the manuscript and the supplement,,
 scripts/report_figure_style_lib.py,report,library,,figures and tables of the manuscript and the supplement,,
+scripts/report_item_names.py,report,library,,figures and tables of the manuscript and the supplement,,
 scripts/report_table_lib.py,report,library,,figures and tables of the manuscript and the supplement,,
 scripts/reviewer_core_aldo.py,reviewer_core,"library (earlier version of a step; imported, not run)",,"library: reviewer analyses, first version (functions reused by later steps)",,
 scripts/reviewer_core_cell_cycle.py,reviewer_core,"library (earlier version of a step; imported, not run)",,"library: reviewer analyses, first version (functions reused by later steps)",,

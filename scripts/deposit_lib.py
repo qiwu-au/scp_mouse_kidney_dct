@@ -92,7 +92,7 @@ DCT_ORDER = ("DCT1", "DCT2", PROLIF, NOT_RESOLVED)
 CONDITION = {"Ctrl": "Control", "ZeroK": "Zero-K"}
 CONDITION_ORDER = ("Control", "Zero-K")
 PLATE_ORDER = ("P1", "P2")
-# Wording of the supplementary cluster tables (the response to the reviewers, S-05-b / S-05-c).
+# Wording of the supplementary cluster tables (the response to the reviewers, S10 / S13).
 EVIDENCE_KIDNEY = {"high": "high", "medium": "medium", "specific_any_rank": "type-specific marker, any rank",
                    "low_shared_only": "shared markers only", "unknown_no_marker_in_top_de": "no marker support"}
 EVIDENCE_DCT = {**EVIDENCE_KIDNEY, "unknown_no_marker_in_top_de": "no marker support (subtype not resolved)"}

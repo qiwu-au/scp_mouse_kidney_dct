@@ -4,8 +4,7 @@ from DCT2 in the Pvalb-GFP-sorted DCT data?).
 
 (authors, 12 Nov 2026: "Yes, go ahead" on the the response to the reviewers plan).
 No new statistics: every value is read from a stored table of kidney_annotation, dct_labels, dct_reviewer, dct_rna or the response to the reviewers and is merged,
-reshaped or counted here. The script writes the tables that Supplementary Figure S-10-a and Supplementary Table
-S-10-b are built from, and it checks every number of the the response to the reviewers letter draft against its source.
+reshaped or counted here. The script writes the tables that Supplementary Figure S17 and Supplementary Table S12 are built from, and it checks every number of the the response to the reviewers letter draft against its source.
 
 Tables written (results/tables/report/):
 - report_10_umod_by_cluster.csv: Umod in the cluster test of the annotation (each Leiden cluster against all

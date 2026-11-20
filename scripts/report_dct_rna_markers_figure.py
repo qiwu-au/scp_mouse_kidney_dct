@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-11-a - DCT marker proteins and their transcripts in the Mouse Kidney
+"""The response to the reviewers: Supplementary Figure S21 - DCT marker proteins and their transcripts in the Mouse Kidney
 Atlas, and the correlation of group means, control and zero-K.
 
 Editors' comment 1 (no scRNA-seq comparator for the DCT
@@ -7,7 +7,7 @@ cells); plan approved by the authors on 12 Nov 2026 ("OK as proposed"). One read
 redrawn from the stored dct_labels and dct_rna tables. No new statistics. The dct_rna analysis figures (dct_rna_dotplot_panel_*,
 dct_rna_pseudobulk_rho_*) carry internal column names and footers and are not used.
 
-(A) Marker dot plot, same 13 columns in every block (the panel markers of Figure 3B):
+(A) Marker dot plot, same 13 columns in every block (the panel markers of Figure 4f):
     protein, control cells by the cluster annotation (cs_ctrl_deg_label: DCT1, DCT2, Unknown shown as "DCT, subtype
     not resolved"); protein, zero-K cells (cs_zerok_pipeline_label: DCT1, Unknown); RNA, atlas classes DCT, DCT-CNT,
     CNT, CTAL, MTAL (atlas level Celltype, all cells and nuclei). Values: dct_labels_dotplot_values.csv and

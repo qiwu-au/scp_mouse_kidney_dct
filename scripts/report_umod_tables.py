@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-10-b (uromodulin in DCT1 and DCT2 cells of the DCT data), one
+"""The response to the reviewers: Supplementary Table S12 (uromodulin in DCT1 and DCT2 cells of the DCT data), one
 workbook.
 
 (authors, 12 Nov 2026: "Yes, go ahead" on the the response to the reviewers plan;
-Editors' comment 3). One workbook with a Contents sheet and five data sheets, in the layout of Supplementary
-Table S-07-d (shared code: report_table_lib.py). No new statistics: every value is copied from a stored
-table. Detection and intensity of Umod and of the DCT list markers by label are in Supplementary Table S-09-c
+Editors' comment 3). One workbook with a Contents sheet and five data sheets, in the layout of Supplementary Table S7 (shared code: report_table_lib.py). No new statistics: every value is copied from a stored
+table. Detection and intensity of Umod and of the DCT list markers by label are in Supplementary Table S11
 (sheet 4) and are not repeated here.
 
 Sheets:

@@ -1,17 +1,17 @@
 #!/usr/bin/env python
-"""The response to the reviewers: main Figure F-08 (formerly Supplementary Figure S-08-d), RNA vs protein detection and
+"""The response to the reviewers: main Figure 3, RNA vs protein detection and
 concordance.
 
 Built at the authors' request (30 Oct 2026) to replace
-rna_protein_integration_strengths_t15 in S-08-d, whose colours were reused for different categories; made a main figure by the
-authors later the same day (placeholder F-08; the response to the reviewers numbers it). Panel letters are upper case, as in the submitted
+rna_protein_integration_strengths_t15 in a supplementary figure, whose colours were reused for different categories; made a main figure by the
+authors later the same day (placeholder Figure 3; the response to the reviewers numbers it). Panel letters are upper case, as in the submitted
 Figures 1-4. Drawn only from existing kidney_rna tables; no new statistics.
 
 Panels (one page, 180 mm wide; no in-figure title or footnote, the legend text is in the the response to the reviewers file):
 A. Detection and concordance classes of the 3,569 genes quantified in both the SCP-MS data and the Mouse Kidney
    Atlas, at detection thresholds of 5%, 10% and 20%, for the revised annotation (kidney_t15_label; 7 cell types;
    the only kidney annotation, authors 30 Oct 2026); all atlas cells.
-B. Every kidney V3 + endothelial-row marker (98; each once, under its first listing type in Supplementary Table 1):
+B. Every kidney V3 + endothelial-row marker (98; each once, under its first listing type in Supplementary Table S2):
    Spearman rho of mean RNA vs mean protein across the 7 cell types of the revised annotation (x), coloured by its
    class at 10% (same colours as in A). Markers that are not in both data sets have no rho and are drawn as hollow
    shapes in the left column (protein not quantified; gene not in the atlas; neither). Grey band: central 95% of

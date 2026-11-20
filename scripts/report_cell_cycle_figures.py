@@ -1,19 +1,19 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figures S-12-a, S-12-b and S-12-c (ProLIF and the cell cycle, DCT data).
+"""The response to the reviewers: Supplementary Figures S23, S18 and S24 (ProLIF and the cell cycle, DCT data).
 
 . Three reader-facing figures, each one assembled file with panel letters, drawn from stored
 tables only (no new statistics here): the dct_reviewer tables, the dct_prolif tables and the the response to the reviewers tables written by
 report_prolif_percell_tabulation.py and report_aldo_random_sets.py. Control and zero-K are shown side
 by side, each analysed on its own; nothing compares the conditions.
 
-  S-12-a  Cell-cycle correction: (A) proteins per cell of the two ProLIF definitions; (B) largest share of one
+  S23  Cell-cycle correction: (A) proteins per cell of the two ProLIF definitions; (B) largest share of one
           Leiden cluster made up of ProLIF cells of the per-cell test, by matrix; (C) same-label neighbour fraction
           of the ProLIF cells of the marker-score label; (D) pseudotime medians, per-cell test, with the reference
           of random cells from the same clusters; (E) pseudotime medians, marker-score label of the clusters.
-  S-12-b  The per-cell proliferation test: (A) DCT2 - DCT1 marker axis against the proliferation score; (B) cells
+  S18  The per-cell proliferation test: (A) DCT2 - DCT1 marker axis against the proliferation score; (B) cells
           with Mki67 or Top2a detected; (C) ProLIF cells per Leiden cluster of the cluster annotation; (D) proteins
           per cell.
-  S-12-c  ALDO scores of the ProLIF cells against DCT1 and DCT2 (Cohen's d), with and without Slc12a3, on the main
+  S24  ALDO scores of the ProLIF cells against DCT1 and DCT2 (Cohen's d), with and without Slc12a3, on the main
           matrix and after regression of the cell-cycle score, against 1,000 random protein sets.
 
 Reader-facing names (list of items, decisions of 12 Nov 2026): "Control" / "Zero-K"; "not resolved" for the label value
@@ -168,7 +168,7 @@ def save(checks: t5.Checks, figs: lib.Figures, fig, name: str, description: str)
 
 
 # =====================================================================================================================
-# S-12-a
+# S23
 # =====================================================================================================================
 def figure_a(run, checks, figs, values, per_cell, spread, knn, pt_group, pt_ref, dpt_summary) -> None:
     h_mm = 209.0
@@ -344,7 +344,7 @@ def figure_a(run, checks, figs, values, per_cell, spread, knn, pt_group, pt_ref,
 
 
 # =====================================================================================================================
-# S-12-b
+# S18
 # =====================================================================================================================
 def figure_b(run, checks, figs, values, per_cell, groups, by_cluster) -> None:
     h_mm = 122.0
@@ -460,7 +460,7 @@ def figure_b(run, checks, figs, values, per_cell, groups, by_cluster) -> None:
 
 
 # =====================================================================================================================
-# S-12-c
+# S24
 # =====================================================================================================================
 def figure_c(run, checks, figs, values, rnd) -> None:
     h_mm = 132.0

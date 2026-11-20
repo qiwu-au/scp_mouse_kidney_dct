@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: the preprocessing kidney grid scored against `kidney_t15_label`, DCT intensity descriptors, figure S-03-a.
+"""The response to the reviewers: the preprocessing kidney grid scored against `kidney_t15_label`, DCT intensity descriptors, figure S2.
 
 (reviewer 1, comment 2; the earlier analysis points 8-9). Run with the authors'
 OK (5 Nov 2026). No Leiden clustering is rerun.
@@ -13,13 +13,13 @@ Why it exists:
 2. dct_reviewer repeated preprocessing steps 2-5 for the DCT conditions but not step 1, so the per-cell intensity descriptors of the
    combined search do not exist. They are computed here with the preprocessing definitions from the dct_labels objects, and the kidney
    row is checked against the preprocessing table. The retired 758-cell values are not used.
-3. Collects every number of the the response to the reviewers letter in three small tables, and draws Supplementary Figure S-03-a. preprocessing's
+3. Collects every number of the the response to the reviewers letter in three small tables, and draws Supplementary Figure S2. preprocessing's
    kidney figures show the submitted labels and cannot be cited.
 
 Macro averages: labels with >= 10 cells, Unknown left out (as dct_reviewer). The preprocessing rule, which keeps Unknown, is also reported
 (`*_incl_unknown`) and is the one used for the checks against the preprocessing tables.
 
-Figure S-03-a (180 mm; no in-figure title; rows A-E, columns total kidney, DCT control, DCT zero-K, one x scale per
+Supplementary Figure S2 (180 mm; no in-figure title; rows A-E, columns total kidney, DCT control, DCT zero-K, one x scale per
 row): one dot per pipeline. Colour: one hue for the data marks; filled or hollow carries per-protein scaling, so
 nothing depends on colour alone. The vertical offset inside a strip only separates dots.
 

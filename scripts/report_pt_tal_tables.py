@@ -1,7 +1,7 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-07-d (PT / TAL heterogeneity), one workbook, revised annotation only.
+"""The response to the reviewers: Supplementary Table S7 (PT / TAL heterogeneity), one workbook, revised annotation only.
 
-The authors asked on 11 Nov 2026 to "assemble Table S-07-d".
+The authors asked on 11 Nov 2026 to "assemble Supplementary Table S7".
 The response to the reviewers, section 5, fixes its content: one workbook with ten sheets, built from 16 stored pt_tal tables (sheets 1-7,
 Mouse Kidney Atlas) and 16 stored rat_segments tables (sheets 8-10, rat segment proteomes), keeping only the rows and columns
 of the revised annotation (kidney_t15_label; one-annotation rule, authors 30 Oct 2026). No new statistics: every value
@@ -20,6 +20,12 @@ What the assembly changes (all recorded per table in the sources table):
 Workbook: results/tables/report/report_07_S07d_tables.xlsx (sheet Contents, then sheets 1-10; Arial 10;
 values only, no formulas; numbers stored with 16 significant digits and shown with a display format). The shared output guard knows no .xlsx
 extension, so the workbook path is checked with cc._check_writable and added to the run outputs by hand.
+
+Names of figures and tables (since 20 Nov 2026): this script and the other table scripts name an item by its
+working label, which report_item_names explains. Book.cell writes every text through
+report_item_names.paper_names, and so are the sheet names and the title of the workbook, so the saved
+workbook holds the names of the paper (numbering map). Column widths are taken from the text as it is declared.
+The creator and description properties of the workbook stay empty.
 
 Inputs (read-only): the 32 pt_tal / rat_segments tables named in SPECS.
 Outputs: the workbook; results/tables/report/report_07_s07d_table_{sources,letter_numbers,checks}.csv;
@@ -54,6 +60,7 @@ from openpyxl.styles import Alignment, Border, Font, PatternFill, Side
 from openpyxl.utils import get_column_letter
 
 import scp_common as cc
+import report_item_names as pn
 
 TASK = "report"
 STEP = "07_s07d_table"
@@ -337,10 +344,11 @@ TERMS = [
 # Numbers that the response to the reviewers, section 2, takes from these tables, at the precision written there.
 # (text, table, value from the re-read workbook table, expected, decimals or None for an exact match)
 def _pick(frame: pd.DataFrame, col: str, **sel):
+    """One cell of a table read back from the workbook; columns and values are looked up by the names of the paper."""
     mask = pd.Series(True, index=frame.index)
     for key, value in sel.items():
-        mask &= frame[key].astype(str).eq(str(value))
-    hit = frame.loc[mask, col]
+        mask &= frame[pn.paper_names(key)].astype(str).eq(pn.paper_names(str(value)))
+    hit = frame.loc[mask, pn.paper_names(col)]
     if len(hit) != 1:
         raise LookupError(f"{len(hit)} rows for {sel}")
     return hit.iloc[0]
@@ -768,7 +776,9 @@ class Book:
         self.positions: dict[str, dict] = {}
 
     def cell(self, ws, row: int, col: int, value, font=F, fmt: str | None = None, width: bool = True):
-        c = ws.cell(row=row, column=col, value=value)
+        # Every text is written with the names that figures and tables have in the paper (report_item_names).
+        # The column width below is taken from the text as it is declared in the script.
+        c = ws.cell(row=row, column=col, value=pn.named(value))
         if isinstance(value, str):
             c.data_type = "s"                    # never a formula, also for text that starts with "="
         c.font = font
@@ -830,7 +840,7 @@ def write_workbook(path, frames: dict[str, pd.DataFrame]) -> Book:
     book.widths[("Contents", 1)] = max(len(SHEETS[s][0]) for s in SHEETS)
     book.widths[("Contents", 3)] = 118
     for number, (name, title) in SHEETS.items():
-        ws = book.wb.create_sheet(name)
+        ws = book.wb.create_sheet(pn.paper_names(name))
         book.cell(ws, 1, 1, f"Supplementary Table S-07-d, sheet {number}. {title}", FT, width=False)
         book.cell(ws, 2, 1, "Terms and column names: see the sheet Contents.", FN, width=False)
         row = 4
@@ -838,11 +848,20 @@ def write_workbook(path, frames: dict[str, pd.DataFrame]) -> Book:
             if spec.sheet == number:
                 row = book.table(ws, row, spec, frames[spec.key])
     book.set_widths()
-    book.wb.properties.title = "Supplementary Table S-07-d"
-    book.wb.properties.creator = cc.GENERATED_BY
-    book.wb.properties.description = f"{cc.GENERATED_TAG}; scripts/report_pt_tal_tables.py"
+    set_properties(book.wb, "Supplementary Table S-07-d")
     book.wb.save(path)
     return book
+
+
+def set_properties(wb, title: str) -> None:
+    """Workbook properties of a supplementary table: its name in the paper as the title, nothing else.
+
+    The creator and the description stay empty (a workbook for readers names no tool and no script); what made the
+    workbook is in the manifest of the run.
+    """
+    wb.properties.title = pn.paper_names(title)
+    wb.properties.creator = ""                   # an empty element; None would be written as the name of the library
+    wb.properties.description = None
 
 
 def read_back(path, positions: dict[str, dict]) -> tuple[dict[str, pd.DataFrame], dict]:
@@ -856,6 +875,7 @@ def read_back(path, positions: dict[str, dict]) -> tuple[dict[str, pd.DataFrame]
                 for i in range(1, pos["n_rows"] + 1)]
         frames[key] = pd.DataFrame(rows, columns=header, dtype=object)       # cells as stored: None stays None
     stats = {"cells": 0, "not_arial": 0, "formulas": 0, "forbidden": []}
+    texts = [wb.properties.title or "", *wb.sheetnames]
     for ws in wb.worksheets:
         for row in ws.iter_rows():
             for c in row:
@@ -864,10 +884,22 @@ def read_back(path, positions: dict[str, dict]) -> tuple[dict[str, pd.DataFrame]
                 stats["cells"] += 1
                 stats["not_arial"] += c.font.name != "Arial"
                 stats["formulas"] += c.data_type == "f"
+                if isinstance(c.value, str):
+                    texts.append(c.value)
                 if isinstance(c.value, str) and FORBIDDEN.search(c.value):
                     stats["forbidden"].append(f"{ws.title}!{c.coordinate}: {c.value[:60]}")
     stats["sheets"] = wb.sheetnames
+    stats["labels_left"] = pn.labels_left(set(texts))
+    stats["texts_read"] = len(texts)
     return frames, stats
+
+
+def check_paper_names(checks: list[dict], stats: dict) -> None:
+    """One check for every table workbook: the saved file holds the names of the paper and no working label."""
+    left = stats["labels_left"]
+    check(checks, "names of the paper: no cell, sheet name or title of the saved workbook names a figure or a table "
+          "by its working label (numbering map and panel table of report_item_names)",
+          "; ".join(left[:12]) or f"none in {stats['texts_read']} texts", "none", not left)
 
 
 REL_TOL = 1e-15            # openpyxl stores numbers with 16 significant digits ("%.16g")
@@ -924,14 +956,15 @@ def main() -> None:
 
     stored, stats = read_back(out, book.positions)
     check(checks, "workbook sheets", ", ".join(stats["sheets"]), "Contents, then sheets 1 to 10",
-          stats["sheets"] == ["Contents", *[SHEETS[s][0] for s in sorted(SHEETS)]])
+          stats["sheets"] == ["Contents", *[pn.paper_names(SHEETS[s][0]) for s in sorted(SHEETS)]])
+    check_paper_names(checks, stats)
     differ, largest = [], 0.0
-    for key, frame in frames.items():
+    for key, frame in frames.items():           # the workbook holds the names of the paper: compared as written
         got = stored[key]
-        if list(got.columns) != [str(c) for c in frame.columns] or got.shape != frame.shape:
+        if list(got.columns) != [pn.paper_names(str(c)) for c in frame.columns] or got.shape != frame.shape:
             differ.append(f"{key}: shape or header")
             continue
-        diffs = [rel_diff(native(a), b) for row_a, row_b in zip(frame.itertuples(index=False, name=None),
+        diffs = [rel_diff(pn.named(native(a)), b) for row_a, row_b in zip(frame.itertuples(index=False, name=None),
                                                                  got.itertuples(index=False, name=None))
                  for a, b in zip(row_a, row_b)]
         n = sum(d > REL_TOL for d in diffs)

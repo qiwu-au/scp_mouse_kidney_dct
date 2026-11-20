@@ -10,7 +10,7 @@ the nuclei-only version too ("Go, with nuclei", 10 Nov 2026):
   by side at 180 mm). Redrawn from the stored kidney_annotation and kidney_rna value tables (no atlas reload) in the style of
   ``kidney_figure2_fig2ab.py``: display names, the panel title "Protein (SCP-MS)", no in-figure note, grey RNA rows and
   columns, Arial >= 7 pt, no text overlap.
-- Supplementary Figure S-05-e: the same panel with the RNA half from the atlas nuclei only (``dotplot_t15_full_nuclei``).
+- Supplementary Figure S5: the same panel with the RNA half from the atlas nuclei only (``dotplot_t15_full_nuclei``).
 The 19-marker file of step fig2ab (``kidney_figure2_fig2b_marker_dotplot``) is kept; this step writes new files only.
 PST row chip in tab10 brown #8c564b instead of the kidney_annotation palette grey #7f7f7f (authors, 10 Nov 2026; kidney_figure2_lib.palette).
 Also tabulates, per marker, the row with the highest plotted colour (Unknown row included) against the marker's own

@@ -20,7 +20,7 @@ Fixed in the plan before any of these numbers was seen (12 Nov 2026):
   stop rule  if |rho| of (1) is below 0.5 in either condition on the main matrix, report to the authors before drafting.
 Each condition alone; nothing compares the conditions.
 Added in this analysis inside these measures (descriptions of the same relation, not in the plan's list): rho against the sort
-plate next to (1); rho of (1) within the groups of Figure 3A; the median pseudotime by quartile of proteins per cell;
+plate next to (1); rho of (1) within the groups of Figure 4e; the median pseudotime by quartile of proteins per cell;
 proteins and labels of each of the 20 other root cells.
 First run (12 Nov 2026): the stop rule was triggered for zero-K (rho -0.497; control -0.993), where the root cell lies
 in the middle of the depth range and the pseudotime rises on both sides of it (quartile table). Reported to the authors,
@@ -34,7 +34,7 @@ Tables (results/tables/report/report_15_pseudotime_<name>.csv):
                        rank among the cells of the condition, and its label under the three annotations
   depth                Spearman rho of pseudotime (main root) with proteins per cell, with the distance in protein
                        number from the root cell, and with sort plate: all cells for each of the seven matrices; the
-                       groups of Figure 3A for the main matrix
+                       groups of Figure 4e for the main matrix
   by_quartile          median pseudotime (main root, main matrix) by quartile of proteins per cell
   other_roots          one row per other root cell (20 per condition): proteins, labels, rho with the main-root
                        pseudotime, group medians under the three annotations, order of the DCT1 and DCT2 medians
@@ -44,7 +44,7 @@ Tables (results/tables/report/report_15_pseudotime_<name>.csv):
   checks               reproduction checks
 
 Limits: per-cell pseudotime is stored for the main root only, so rho between roots is the value dct_labels stored and the
-groups of Figure 3A (ProLIF cells of the per-cell test) have no medians for the other roots. The 20 other roots are
+groups of Figure 4e (ProLIF cells of the per-cell test) have no medians for the other roots. The 20 other roots are
 cells with the per-cell marker-score label DCT1 (the rule of the main analysis), not cells of clusters annotated DCT1.
 Spearman rho describes a monotone relation; a pseudotime that rises on both sides of the root is shown by the quartile
 table. One pool of 3 mice per condition.

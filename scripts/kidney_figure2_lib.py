@@ -4,7 +4,7 @@ Imported by the ``kidney_figure2_*.py`` step scripts.
 Task: recompute the kidney panels of the submitted Figure 2 that were made with the dropped per-cell re-annotation
 (``kidney_reannot_label`` = ``cell_type_v2``) under the one revised kidney annotation, ``kidney_t15_label``:
 Figure 2D (protein IDs and within-cell dynamic range per cell type), 2E (exact core-set membership), 2F (pairwise
-Jaccard of core proteomes), 2G (stacked violin of the top-10 DE proteins) and Supplemental Table 3.
+Jaccard of core proteomes), 2G (stacked violin of the top-10 DE proteins) and Supplementary Table S6.
 
 Decisions by the authors (31 Oct 2026, plan approval)
 --------------------------------------------------
@@ -16,7 +16,7 @@ Decisions by the authors (31 Oct 2026, plan approval)
 - Display names: DCT1 -> DCT, PC -> CNT/PC. Row order and colours as the revised Figure 2A / 2C (kidney_annotation / kidney_rna).
 - 2G keeps the submitted rule (all types' Wilcoxon scores sorted together; first 10 unique proteins), although under
   ``kidney_t15_label`` it selects ten PCT proteins (authors, 31 Oct 2026, after step 2).
-- 2E: UpSet layout (bars + membership matrix). Supplemental Table 3 also lists the 49 unique-core proteins. Every plot
+- 2E: UpSet layout (bars + membership matrix). Supplementary Table S6 also lists the 49 unique-core proteins. Every plot
   is its own file with no panel letter or title (the authors assemble Figure 2 in PowerPoint) (authors, 31 Oct 2026).
 - PST is drawn in tab10 brown #8c564b instead of the kidney_annotation palette grey #7f7f7f (authors, 10 Nov 2026), as in the S-07
   panels; ``palette()`` below applies it in every kidney_figure2 figure.

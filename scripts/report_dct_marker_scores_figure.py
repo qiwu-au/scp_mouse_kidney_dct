@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-09-b - panel scores by cluster label in the DCT data, control and
+"""The response to the reviewers: Supplementary Figure S15 - panel scores by cluster label in the DCT data, control and
 zero-K, with the 90th-percentile flag lines.
 
 The authors asked on 12 Nov 2026 to redraw the two
@@ -8,7 +8,7 @@ analysis figure (dct_reviewer_markers.py, dct_reviewer_task3_score_violins_prima
 following the re-render checklist of the response to the reviewers, section 5: no in-figure title; panels named DCT core,
 DCT1-associated, DCT2-associated, TAL, CNT and collecting duct, Interstitial; the cell-cycle and legacy ProLIF
 panels dropped; Ctrl -> Control, ZeroK -> Zero-K; the empty DCT2 slot kept for
-zero-K; the label value 'Unknown' shown as "not resolved", as in Figure S-09-a. No new statistics: the violins,
+zero-K; the label value 'Unknown' shown as "not resolved", as in Supplementary Figure S14. No new statistics: the violins,
 median dots and interquartile bars are drawn from the stored per-cell scores (as dct_reviewer_lib.violins drew the
 analysis figure), the lines are the stored thresholds and the numbers are the stored flag counts.
 
@@ -74,7 +74,7 @@ TICK_TOP, TICK_LINE = 1.4, 3.0            # x tick label lines below the axis (m
 COND_DISPLAY = {"Ctrl": "Control", "ZeroK": "Zero-K"}
 ORDER = ("DCT1", "DCT2", "Unknown")       # dct_labels label values; the empty DCT2 slot is kept for zero-K
 # Display name of the dct_labels label value 'Unknown' (authors, 12 Nov 2026, the response to the reviewers: "Use not resolved"), on two lines
-# as in Figure S-09-a; the tables keep the dct_labels value.
+# as in Supplementary Figure S14; the tables keep the dct_labels value.
 LABEL_LINES = {"DCT1": ("DCT1", ""), "DCT2": ("DCT2", ""), "Unknown": ("not", "resolved")}
 INK, DARK = "#0b0b0b", "#52514e"
 # letter, panel (table value), score column, title lines, proteins (legend), flag column, flag-count column

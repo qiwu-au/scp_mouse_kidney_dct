@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-06-a, every quantified marker of the DCT list in the control cells.
+"""The response to the reviewers: Supplementary Figure S16, every quantified marker of the DCT list in the control cells.
 
 Drawn at the authors' request (12 Nov 2026: "Yes, redraw
 them"; the response to the reviewers, section 5 and open item 3). It replaces, as a reader-facing file, the dct_labels analysis figure
@@ -9,18 +9,18 @@ object exactly as report_dct_dotplot.py does, and must equal the stored dct_labe
 
 Rows: the cluster annotation of the control cells of the combined search (cs_ctrl_deg_label; 729 cells): DCT1 382,
   DCT2 85, Unknown 262. The dct_labels label value 'Unknown' (cells of clusters without marker support) is shown as
-  "DCT, subtype not resolved" (dct_prolif_lib.UNRESOLVED; the row name of the redrawn Figure 3B; authors, 12 Nov 2026,
+  "DCT, subtype not resolved" (dct_prolif_lib.UNRESOLVED; the row name of the redrawn Figure 4f; authors, 12 Nov 2026,
   via the response to the reviewers: "Yes, rename there"). Display only: the checks and the values file keep 'Unknown'; the values file
-  has the column 'row_display'. No ProLIF row: the rows are the cluster annotation, not the groups of Figure 3A.
-Columns: every marker of the DCT list (data/DCT/DCT_markers_V1.xlsx = Supplemental Table 1, DCT tab) that is quantified,
+  has the column 'row_display'. No ProLIF row: the rows are the cluster annotation, not the groups of Figure 4e.
+Columns: every marker of the DCT list (data/DCT/DCT_markers_V1.xlsx = Supplementary Table S2, DCT tab) that is quantified,
   each once under the first cell type of the list that names it, in the dct_labels plotted order
   (dct_labels_marker_order_dct.csv, version 'workbook'; 13 markers):
   DCT1 Slc12a3, Pvalb, Egf, Umod, Trpm7, Ptgfr | DCT2 Slc8a1, Calb1, S100g, Klk1, Trpv5 | ProLIF Top2a, Mki67.
   Col5a2 (DCT1) and Cenpf (ProLIF) are not quantified. The bracket names are categories of the marker list, not cell
   labels.
-Encoding: as the dct_labels dotplots and Figure 3B (dotplot format): dot area = fraction of the row's cells with intensity > 0;
+Encoding: as the dct_labels dotplots and Figure 4f (dotplot format): dot area = fraction of the row's cells with intensity > 0;
   colour = row mean of the scaled .X of the dct_labels labelled object (per-protein z-scored ln(1 + intensity)), rescaled
-  0-1 per protein across the three rows; Arial >= 7 pt; exact 85 mm width (as Figure 3B); PDF + 600-dpi PNG + LZW
+  0-1 per protein across the three rows; Arial >= 7 pt; exact 85 mm width (as Figure 4f); PDF + 600-dpi PNG + LZW
   TIFF. No title, no panel letter, no footer.
 
 Inputs (read-only): results/h5ad/dct_labels_DCT_ctrl_labelled.h5ad;
@@ -73,8 +73,8 @@ DCT_LABELS_VALUES = DCT_LABELS_DIR / "dct_labels_dotplot_values.csv"
 PRIMARY = "cs_ctrl_deg_label"                         # dct_labels Ctrl primary (the project notes, DCT labels, combined search)
 ROWS = ["DCT1", "DCT2", "Unknown"]
 EXPECTED = {"DCT1": 382, "DCT2": 85, "Unknown": 262}  # the project notes; the response to the reviewers section 5
-ROW_DISPLAY = {"Unknown": t31.UNRESOLVED}             # display only, as the redrawn Figure 3B
-# The response to the reviewers, section 5 (S-06-a) and the Supplementary Methods paragraph: the 13 markers in this order.
+ROW_DISPLAY = {"Unknown": t31.UNRESOLVED}             # display only, as the redrawn Figure 4f
+# The response to the reviewers, section 5 (S16) and the Supplementary Methods paragraph: the 13 markers in this order.
 EXPECTED_MARKERS = ["Slc12a3", "Pvalb", "Egf", "Umod", "Trpm7", "Ptgfr", "Slc8a1", "Calb1", "S100g", "Klk1", "Trpv5",
                     "Top2a", "Mki67"]
 EXPECTED_GROUPS = [("DCT1", 0, 5), ("DCT2", 6, 10), ("ProLIF", 11, 12)]
@@ -130,7 +130,7 @@ def main() -> None:
         adata.layers["ln1p_intensity"] = np.log1p(cc.dense(adata.layers["intensity"]).astype(np.float64))
         checks.add("layer ln1p_intensity computed from layers['intensity'] (absent from the object)", "True", None)
 
-    # --- values: computed as Figure 3B, compared with the stored dct_labels values ----------------------------------------
+    # --- values: computed as Figure 4f, compared with the stored dct_labels values ----------------------------------------
     vals = t6.group_values(adata, labels, ROWS, markers)
     vals.insert(0, "label_column", PRIMARY)
     vals["mean_z_scaled_0_1"] = t6.scaled_01(vals)

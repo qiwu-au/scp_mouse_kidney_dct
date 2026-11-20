@@ -1,17 +1,17 @@
 #!/usr/bin/env python
-"""The response to the reviewers: the per-cell ProLIF cells of Figure 3A in the stored cell-cycle, pseudotime and ALDO results.
+"""The response to the reviewers: the per-cell ProLIF cells of Figure 4e in the stored cell-cycle, pseudotime and ALDO results.
 
 . Approved by the authors
 on 12 Nov 2026 ("Yes, go ahead": plan choice 1, tabulation for the per-cell ProLIF cells).
 
 Why: dct_reviewer (cell-cycle correction, pseudotime, ALDO scores) could report ProLIF only for the marker-score label of the
 clusters (cs_<cond>_cluster_label; control 119, zero-K 98 cells), because the cluster annotation (dct_labels) has no ProLIF
-cluster. Figure 3A shows another group: the cells called ProLIF per cell by the dct_prolif proliferation test (route A,
+cluster. Figure 4e shows another group: the cells called ProLIF per cell by the dct_prolif proliferation test (route A,
 no-floor run; control 37, zero-K 63). This script joins the stored per-cell tables of dct_reviewer with that call and reports,
 for those cells, the same quantities. No pipeline is rerun: no clustering, no embedding, no pseudotime and no score is
 recomputed; every per-cell value is read from a stored table. New here are only group summaries and group tests.
 
-Groups (the groups of Figure 3A): ProLIF = t31_label == 'ProLIF'; every other cell keeps its cluster annotation
+Groups (the groups of Figure 4e): ProLIF = t31_label == 'ProLIF'; every other cell keeps its cluster annotation
 (dct_label: DCT1, DCT2, Unknown = "DCT, subtype not resolved"). Each condition alone; nothing compares the conditions.
 
 Tables (results/tables/report/report_12_percell_prolif_<name>.csv):
@@ -83,7 +83,7 @@ VARIANTS = ("base", "no_Slc12a3", "no_cell_cycle", "no_Slc12a3_no_cell_cycle")
 REFERENCES = {"cluster_annotation": "dct_label", "marker_score_clusters": "second_label"}
 COMPARISONS = (("ProLIF_vs_DCT1", ("DCT1",)), ("ProLIF_vs_DCT2", ("DCT2",)),
                ("ProLIF_vs_DCT1_DCT2", ("DCT1", "DCT2")), ("ProLIF_vs_all_other_cells", None))
-# Figure 3A groups (dct_prolif README section 16, no-floor run; list of items, Figure 3A and 3B rows).
+# Figure 4e groups (dct_prolif README section 16, no-floor run; list of items, Figure 4e and 4f rows).
 EXPECTED = {"Ctrl": {"DCT1": 362, "DCT2": 79, PROLIF: 37, "Unknown": 251},
             "ZeroK": {"DCT1": 402, PROLIF: 63, "Unknown": 237}}
 EXPECTED_BY_LABEL = {"Ctrl": {"DCT1": 20, "DCT2": 6, "Unknown": 11}, "ZeroK": {"DCT1": 47, "Unknown": 16}}

@@ -7,7 +7,7 @@ Run after deposit_build.py. It reads the 19 files of results/h5ad/zenodo/ from d
   - the plan's field lists and the label counts of the project notes;
   - the two raw Spectronaut exports (every value of every object, and the two filters);
   - the figure objects (kidney: kidney_object object; DCT: dct_labels labelled objects, the dct_labels canonical table and the dct_prolif
-    per-cell table of the Figure 3A overlay; both diets: dct_intake joint object);
+    per-cell table of the Figure 4e overlay; both diets: dct_intake joint object);
   - each other (CSV copies against the h5ad; the object of both diets against the two single-diet objects);
   - the 'not exported' list and the word list of the plan (every key, column name and text value);
   - the statements of the deposit's README and data dictionary (placeholders, graph from the stored principal

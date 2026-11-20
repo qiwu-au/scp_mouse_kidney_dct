@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Figure F-19 (zero-K against control, pre-specified panel proteins) in the journal's style.
+"""The response to the reviewers: Figure 5 (zero-K against control, pre-specified panel proteins) in the journal's style.
 
 (authors, 15 Nov 2026: "Yes, redraw"; the journal's "Checklist
 for Style"). The compiled figure of the response to the reviewers (report_19_fig_F19_compiled) is drawn again by its own functions

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-03-b (preprocessing sensitivity), one workbook with six sheets.
+"""The response to the reviewers: Supplementary Table S1 (preprocessing sensitivity), one workbook with six sheets.
 
-The authors asked on 12 Nov 2026 to assemble Supplementary
-Tables S-01-a, S-02-d and S-03-b ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S-03-b: (1) all
+The authors asked on 12 Nov 2026 to assemble Supplementary Tables S9, S3 and S1 ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S1: (1) all
 pipelines in the three datasets; (2) ranges by group; (3) detection of the selected proteins; (4) normalization
 factors and per-cell intensity descriptors; (5) kidney per-label purity, silhouette and per-resolution clustering
 scores under the revised annotation; (6) depth-regressed embeddings. It is built from the 11 stored tables named
@@ -27,7 +26,7 @@ What the assembly changes (all recorded per table in the sources table):
 The stored measure text "revised rule and markers" (table 6a, two rows) reads "annotation rule and markers" (authors, 12 Nov 2026).
 
 Workbook: results/tables/report/report_03_S03b_tables.xlsx (sheet Contents, then sheets 1-6), in the
-layout of Supplementary Table S-07-d (shared code: report_table_lib.py).
+layout of Supplementary Table S7 (shared code: report_table_lib.py).
 
 Inputs (read-only): the 11 tables named in SPECS.
 Outputs: the workbook; results/tables/report/report_03_s03b_table_{sources,checks}.csv;

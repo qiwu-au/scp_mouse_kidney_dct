@@ -1,16 +1,16 @@
 #!/usr/bin/env python
-"""The response to the reviewers: revised Figure 3B, DCT marker dotplot with the groups of the revised Figure 3A.
+"""The response to the reviewers: revised Figure 4f, DCT marker dotplot with the groups of the revised Figure 4e.
 
 Drawn at the authors' request (10 Nov 2026, the response to the reviewers: "Draw 3B
-with 3A groups") so that Figure 3B shows the same cell groups as the revised Figure 3A, which the authors chose on 10 Nov
+with 3A groups") so that Figure 4f shows the same cell groups as the revised Figure 4e, which the authors chose on 10 Nov
 2026: results/figures/dct_prolif/dct_prolif_prolif_overlay_nofloor_ctrl_85mm.
 
-Rows (the Figure 3A groups, control cells of the combined search, 729 cells):
+Rows (the Figure 4e groups, control cells of the combined search, 729 cells):
   each cell's dct_labels primary label (cs_ctrl_deg_label: DCT1, DCT2, Unknown), except the 37 cells that the dct_prolif route-A
   per-cell call of the no-floor run (cs_t31nf_label) labels ProLIF, which form their own row. The groups are read from
   results/tables/dct_prolif/dct_prolif_prolif_overlay_per_cell.csv (run 'nofloor', condition 'Ctrl', column
   overlay_group); nothing is refitted and no label changes. dct_prolif is not adopted: the dct_labels labels stay primary
-  (the project notes). The row colours are those of Figure 3A (dct_prolif_lib.LABEL_COLORS).
+  (the project notes). The row colours are those of Figure 4e (dct_prolif_lib.LABEL_COLORS).
 Row display name (authors, 12 Nov 2026, via the response to the reviewers: "Yes, rename there"): the dct_labels label value 'Unknown' (cells of
   clusters without marker support) is shown as "DCT, subtype not resolved" (dct_prolif_lib.UNRESOLVED). Display only:
   the groups, the checks and the values file keep 'Unknown'; the values file adds the column 'row_display'.
@@ -20,7 +20,7 @@ Columns: the dct_labels panel markers in the dct_labels plotted order (dct_label
 Encoding: as the dct_labels dotplots (dct_labels_figures.py, dotplot format): dot area = fraction of the row's cells with
   intensity > 0 (layers['intensity']); colour = row mean of the scaled .X of the dct_labels labelled object (per-protein
   z-scored ln(1 + intensity), submitted pipeline), rescaled 0-1 per protein across the four rows; Arial >= 7 pt;
-  exact 85 mm width (Figure 3A is 85 mm); PDF + 600-dpi PNG + LZW TIFF. No title, no panel letter, no footer (one
+  exact 85 mm width (Figure 4e is 85 mm); PDF + 600-dpi PNG + LZW TIFF. No title, no panel letter, no footer (one
   plot per file, as the kidney_figure2 Figure 2 files; the authors assemble the figure).
 
 Check before drawing: the same code reproduces the dct_labels dotplot values of cs_ctrl_deg_label (rows DCT1, DCT2, Unknown)
@@ -79,8 +79,8 @@ DCT_PROLIF_LABELS = DCT_PROLIF_DIR / "dct_prolif_dct_labels.csv"
 PRIMARY = "cs_ctrl_deg_label"           # dct_labels Ctrl primary (the project notes, DCT labels, combined search)
 DCT_PROLIF_COL = "cs_t31nf_label"              # dct_prolif primary run (no floor); route-A ProLIF only is used
 GROUP_COL = "figure_3a_group"
-ROWS = ["DCT1", "DCT2", "ProLIF", "Unknown"]                       # Figure 3A legend order
-EXPECTED = {"DCT1": 362, "DCT2": 79, "ProLIF": 37, "Unknown": 251}  # Figure 3A (dct_prolif README section 16; the response to the reviewers)
+ROWS = ["DCT1", "DCT2", "ProLIF", "Unknown"]                       # Figure 4e legend order
+EXPECTED = {"DCT1": 362, "DCT2": 79, "ProLIF": 37, "Unknown": 251}  # Figure 4e (dct_prolif README section 16; the response to the reviewers)
 ROW_DISPLAY = {"Unknown": t31.UNRESOLVED}   # display only (authors, 12 Nov 2026); data keep the dct_labels value 'Unknown'
 WIDTH = 85.0
 PITCH_MAX = 4.5
@@ -93,7 +93,7 @@ def main() -> None:
     run = cc.Run(TASK, STEP, args)
     checks = t5.Checks("dct_ctrl_combined")
 
-    # --- Figure 3A groups (dct_prolif overlay table) -------------------------------------------------------------------
+    # --- Figure 4e groups (dct_prolif overlay table) -------------------------------------------------------------------
     ov = pd.read_csv(run.use_input(DCT_PROLIF_OVERLAY, "dct_prolif overlay per cell (Figure 3A groups)"), dtype={"cell_id": str})
     ov = ov[(ov["run"] == "nofloor") & (ov["condition"] == "Ctrl")].set_index("cell_id")
     counts = ov["overlay_group"].value_counts().to_dict()
@@ -153,7 +153,7 @@ def main() -> None:
     checks.add(f"same code reproduces the dct_labels dotplot values of {PRIMARY} (rows x markers; max abs diff)",
                f"{len(m)} of {len(t27v)}; " + "; ".join(f"{k} {v:.1e}" for k, v in diffs.items()), ok_rep, "< 1e-9")
 
-    # --- Figure 3B values -----------------------------------------------------------------------------------------
+    # --- Figure 4f values -----------------------------------------------------------------------------------------
     vals = t6.group_values(adata, groups, ROWS, markers)
     vals.insert(0, "label_column", GROUP_COL)
     vals["mean_z_scaled_0_1"] = t6.scaled_01(vals)

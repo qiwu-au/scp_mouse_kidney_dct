@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-14-b (ProLIF cells: prevalence, dissociation-stress proteins and
+"""The response to the reviewers: Supplementary Table S13 (ProLIF cells: prevalence, dissociation-stress proteins and
 quality flags in the DCT data), one workbook.
 
 . One workbook with a Contents sheet and five data sheets, built from nine stored
@@ -9,10 +9,10 @@ every value is copied from a stored table. Layout, style and checks are those of
 (report_table_lib.py).
 
 Not copied here, because other supplementary tables already hold them: the five criteria of the per-cell test and
-its protein set (S-12-d, tables 4d and 5a); depth and sort plate of the ProLIF cells of the marker-score label
-(S-12-d, tables 4a to 4c); the mitochondrial metrics, the flags of the marker-score ProLIF cells and the exclusion of
-flagged cells against random removals (S-02-d, tables 2d, 6h, 7e and 7f); cycling markers by atlas class and by
-SCP-MS group (S-11-c, sheet 5).
+its protein set (S15, tables 4d and 5a); depth and sort plate of the ProLIF cells of the marker-score label
+(S15, tables 4a to 4c); the mitochondrial metrics, the flags of the marker-score ProLIF cells and the exclusion of
+flagged cells against random removals (S3, tables 2d, 6h, 7e and 7f); cycling markers by atlas class and by
+SCP-MS group (S14, sheet 5).
 
 What the assembly changes (recorded per table in the sources table):
 - conditions: Ctrl -> Control, ZeroK -> Zero-K; the conditions are listed one after the other and never compared;
@@ -50,6 +50,7 @@ if __name__ == "__main__":
 import argparse
 
 import scp_common as cc
+import report_item_names as pn
 import report_table_lib as lib
 from report_table_lib import CONDITION, MARKER_SCORE, UNKNOWN_NOTE, Spec, WorkbookDef, _pick
 
@@ -246,7 +247,8 @@ LETTER = [
 
 def extra_checks(frames: dict, stored: dict, checks: list) -> None:
     cells = stored["5a"]
-    got = {c: cells.loc[cells["condition"].eq(c), "figure_3a_group"].value_counts().to_dict()
+    group = pn.paper_names("figure_3a_group")     # the column as the workbook names it (panel of the paper)
+    got = {c: cells.loc[cells["condition"].eq(c), group].value_counts().to_dict()
            for c in ("Control", "Zero-K")}
     expected = {"Control": {"DCT1": 362, "DCT2": 79, "ProLIF": 37, "Unknown": 251},
                 "Zero-K": {"DCT1": 402, "ProLIF": 63, "Unknown": 237}}

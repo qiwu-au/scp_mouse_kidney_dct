@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-02-b - mitochondrial protein fractions in the DCT data, control and
+"""The response to the reviewers: Supplementary Figure S19 - mitochondrial protein fractions in the DCT data, control and
 zero-K side by side, as one assembled reader-facing figure.
 
 (reviewer 1, comment 1). The authors asked on 12 Nov 2026 for the
@@ -12,7 +12,7 @@ per-well tables. Each condition is shown on its own; nothing compares the condit
 Labels: the cluster annotation (cs_ctrl_deg_label, cs_zerok_pipeline_label; the dct_reviewer "primary" column). Its value
 'Unknown' is shown as "not resolved" (D4 of the response to the reviewers Nov 2026: DCT cells whose subtype was not resolved, clusters
 without marker support). The marker-score label (clusters) (cs_<cond>_cluster_label, the dct_reviewer "second" column) is not
-drawn: its rows are in Supplementary Table S-02-d, as the letter states. No drawn text names the revision process
+drawn: its rows are in Supplementary Table S3, as the letter states. No drawn text names the revision process
 (authors, 12 Nov 2026: "we only show the final products"); a check stops the run on "submitted", "submission" or
 "re-annotation".
 

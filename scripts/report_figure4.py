@@ -5,10 +5,10 @@
 for Style": one image per figure, lower-case panel letters, numbers of four digits closed up).
 
 Panels
-  a  Figure 3A, report_05_fig3a_umap_85mm (85 x 80 mm): no text is changed. The PNG and PDF of the response to the reviewers are
+  a  Figure 4e, report_05_fig3a_umap_85mm (85 x 80 mm): no text is changed. The PNG and PDF of the response to the reviewers are
      used as they are. For the 1000-dpi TIFF the panel is drawn again by ``panel`` of report_dct_umap.py
      (imported) from the same inputs; that drawing is first compared with the current PNG at 600 dpi, pixel for pixel.
-  b  Figure 3B, report_11_fig3b_protein_rna_85mm (85 x 89.3 mm): drawn again as report_dct_dotplot_protein_rna.py
+  b  Figure 4f, report_11_fig3b_protein_rna_85mm (85 x 89.3 mm): drawn again as report_dct_dotplot_protein_rna.py
      draws it (``FixedPanel``, ``stacked_below`` of report_dct_rna_lib.py; the same stored values), compared with the
      current PNG pixel for pixel; then the RNA row labels "CNT (3,903)", "CTAL (3,600)", "MTAL (3,840)" become
      "CNT (3903)", "CTAL (3600)", "MTAL (3840)". "DCT (16,381)" keeps the comma. Nothing else is changed. Written
@@ -56,8 +56,8 @@ import pandas as pd
 
 import scp_common as cc
 import cluster_de_lib as t5
-import report_dct_umap as a3          # Figure 3A drawing
-import report_dct_dotplot_protein_rna as b3      # Figure 3B drawing
+import report_dct_umap as a3          # Figure 4e drawing
+import report_dct_dotplot_protein_rna as b3      # Figure 4f drawing
 import report_figure_style_lib as R
 
 import matplotlib.pyplot as plt
@@ -70,7 +70,7 @@ FIG_DIR = cc.OUT_ROOTS["figures"] / TASK
 OLD_A = FIG_DIR / "report_05_fig3a_umap_85mm"
 OLD_B = FIG_DIR / "report_11_fig3b_protein_rna_85mm"
 OLD_B_VALUES = cc.OUT_ROOTS["tables"] / TASK / "report_11_fig3b_protein_rna_values.csv"
-TOP_MARGIN_MM = 3.0            # used only if a letter would cover drawn content (as the room above the F-19 plots)
+TOP_MARGIN_MM = 3.0            # used only if a letter would cover drawn content (as the room above the Figure 5 plots)
 EXPECTED_B = [("CNT (3,903)", "CNT (3903)"), ("CTAL (3,600)", "CTAL (3600)"), ("MTAL (3,840)", "MTAL (3840)")]
 KEPT_B = "DCT (16,381)"
 
@@ -81,7 +81,7 @@ def layout(w: dict, h: dict, width, top):
 
 
 def draw_a(run, checks):
-    """Figure 3A as report_dct_umap.main draws it (inputs, style, panel)."""
+    """Figure 4e as report_dct_umap.main draws it (inputs, style, panel)."""
     ov = pd.read_csv(run.use_input(a3.DCT_PROLIF_OVERLAY, "dct_prolif overlay per cell (Figure 3A groups)"), dtype={"cell_id": str})
     ov = ov[(ov["run"] == "nofloor") & (ov["condition"] == "Ctrl")].set_index("cell_id")
     adata = ad.read_h5ad(run.use_input(a3.DCT_LABELS_H5AD, "dct_labels labelled object (Ctrl): UMAP coordinates"))
@@ -102,7 +102,7 @@ def draw_a(run, checks):
 
 
 def draw_b(run, checks):
-    """Figure 3B as report_dct_dotplot_protein_rna.main draws it (stored values, style, panels, canvas)."""
+    """Figure 4f as report_dct_dotplot_protein_rna.main draws it (stored values, style, panels, canvas)."""
     pv = pd.read_csv(run.use_input(b3.PROTEIN_VALUES, "the response to the reviewers Figure 3B values (protein half)"))
     markers = pv.drop_duplicates("marker")["marker"].tolist()
     n_rows = pv.drop_duplicates("group").set_index("group")["n_cells"].to_dict()

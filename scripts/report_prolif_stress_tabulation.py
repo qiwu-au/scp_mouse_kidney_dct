@@ -1,12 +1,12 @@
 #!/usr/bin/env python
-"""The response to the reviewers: the per-cell ProLIF cells of Figure 3A in the stored dissociation-stress and mito results.
+"""The response to the reviewers: the per-cell ProLIF cells of Figure 4e in the stored dissociation-stress and mito results.
 
 . Approved by the authors on 12 Nov 2026 ("Yes, go ahead":
 plan default 1, one tabulation of stored per-cell values).
 
 Why: dct_reviewer (dissociation-stress score, mitochondrial metrics and flags) could report ProLIF only for the marker-score
 label of the clusters (cs_<cond>_cluster_label; control 119, zero-K 98 cells), because it was run before the per-cell
-proliferation test existed. Figures 3A and 3B show another group: the cells called ProLIF per cell by the dct_prolif test
+proliferation test existed. Figures 4e and 4f show another group: the cells called ProLIF per cell by the dct_prolif test
 (route A, no-floor run; control 37, zero-K 63). This script joins the stored per-cell tables with that call and
 reports the same quantities for those cells. No pipeline is rerun: no score, clustering or embedding is recomputed.
 New here are group summaries, group tests and a prevalence table; the only values read from a data object are the
@@ -28,11 +28,11 @@ Rows that compare ProLIF with DCT1 or with DCT2 alone are written as a second, d
 
 Tables (results/tables/report/report_14_prolif_stress_<name>.csv):
   groups           cells, sort plate, protein IDs, total intensity, stress scores, mito fractions and flags, for the
-                   groups of Figure 3A, the marker-score label of the clusters, and all cells
+                   groups of Figure 4e, the marker-score label of the clusters, and all cells
   panel_detection  cells with each quantified stress-panel protein detected, per group
   contrasts        ProLIF against the reference groups, per measure (Mann-Whitney U, effect sizes, three OLS models)
   flags            ProLIF against the reference groups, per stored flag (Fisher's exact test)
-  score_vs_depth   Spearman rho of each stress score with log10 protein IDs, all cells and within the Figure 3A groups
+  score_vs_depth   Spearman rho of each stress score with log10 protein IDs, all cells and within the Figure 4e groups
   prevalence       cells per definition of a proliferating cell (per-cell test, held-out proteins, marker-score
                    labels, cell-cycle score rule), by sort plate, protein-ID quartile and cluster annotation, with
                    Wilson 95% intervals; and the Mouse Kidney Atlas DCT rows (transcripts; stored dct_rna / atlas_dct values)
@@ -94,7 +94,7 @@ SUMMARY = ("n_detected", "total_intensity", *STRESS, "mitocarta_intensity_fracti
 FLAGS = ("mito_high", "mito_low", "mito_any", "depth_low", "depth_high", "any")
 MODELS = tuple(t3.CONTRAST_MODELS)
 P_COLS = ("mannwhitney_p", *[f"{m}_p" for m in MODELS])
-# Figure 3A groups (dct_prolif README section 16, no-floor run; the response to the reviewers tabulation).
+# Figure 4e groups (dct_prolif README section 16, no-floor run; the response to the reviewers tabulation).
 EXPECTED = {"Ctrl": {"DCT1": 362, "DCT2": 79, PROLIF: 37, "Unknown": 251},
             "ZeroK": {"DCT1": 402, PROLIF: 63, "Unknown": 237}}
 # dct_labels README (headline and section 5), dct_reviewer README section 4, dct_prolif README section 2.

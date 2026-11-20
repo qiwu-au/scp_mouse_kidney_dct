@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-"""report: shared assembly of supplementary table workbooks from stored tables (S-01-a, S-02-d, S-03-b).
+"""report: shared assembly of supplementary table workbooks from stored tables (S9, S3, S1).
 
 (authors, 12 Nov 2026: "Yes, assemble them"). Used by
 report_filtering_table.py, report_mito_tables.py and report_preprocessing_tables.py. The layout and the style
-are those of Supplementary Table S-07-d (report_pt_tal_tables.py, 11 Nov 2026), whose workbook helpers are
+are those of Supplementary Table S7 (report_pt_tal_tables.py, 11 Nov 2026), whose workbook helpers are
 imported unchanged: a Contents sheet, numbered data sheets, a title row and note lines per table, Arial 10, values
 only, numbers stored with 16 significant digits and shown with a display format.
 
@@ -14,6 +14,12 @@ sources table. Checks (written to the checks table), per table:
 - every numeric value read back from the saved workbook equals the value of the filtered source (whole numbers
   exactly; other numbers to the 16 significant digits a workbook stores), and every text value equals the source
   text with the stated display names.
+
+Names of figures and tables (since 20 Nov 2026): a script names an item by its working label, which
+report_item_names explains. Every cell, sheet name and the title of the workbook are written through
+report_item_names.paper_names, so the saved workbook holds the names of the paper (numbering map); column
+widths are taken from the text as it is declared. The checks compare the saved workbook with the tables as written,
+and one check asks that no working label is left in it.
 
 Inputs and outputs: see the three scripts. This module writes nothing by itself.
 """
@@ -30,13 +36,14 @@ from openpyxl import load_workbook
 from openpyxl.styles import Alignment
 
 import scp_common as cc
-from report_pt_tal_tables import (F, FB, FN, FT, HEAD_BORDER, HEAD_FILL, REL_TOL, Book, _pick, check, native,
-                                      number_format, rel_diff)
+import report_item_names as pn
+from report_pt_tal_tables import (F, FB, FN, FT, HEAD_BORDER, HEAD_FILL, REL_TOL, Book, _pick, check,
+                                      check_paper_names, native, number_format, rel_diff, set_properties)
 
 TASK = "report"
 UNKNOWN_NOTE = "Unknown = DCT, subtype not resolved (cells of clusters without marker support)"
 
-# Display names (the project notes; thread files, section 2; S-07-d).
+# Display names (the project notes; thread files, section 2; S7).
 CONDITION = {"Ctrl": "Control", "ZeroK": "Zero-K"}
 DATASET = {"kidney": "Total kidney", "Ctrl": "DCT Control", "ZeroK": "DCT Zero-K"}
 KIDNEY_LABEL = {"DCT1": "DCT", "PC": "CNT/PC", "all_cells": "all cells"}
@@ -106,7 +113,7 @@ class Spec:
 
 @dataclass
 class WorkbookDef:
-    label: str                                 # "S-02-d"
+    label: str                                 # "S3"
     step: str                                  # "02_s02d_table"
     workbook: str                              # file name of the workbook
     title: str
@@ -137,7 +144,7 @@ def as_stored(value):
 
 
 class TableBook(Book):
-    """The S-07-d workbook writer, with infinite numbers written as text."""
+    """The S7 workbook writer, with infinite numbers written as text."""
 
     def table(self, ws, row: int, spec, frame: pd.DataFrame) -> int:
         self.cell(ws, row, 1, f"Table {spec.key}. {spec.title}", FB, width=False)
@@ -309,11 +316,11 @@ def verify_table(spec: Spec, src: pd.DataFrame, joined: pd.DataFrame | None, sto
         else:
             values = list(kept[source])
             numeric = bool(pd.api.types.is_numeric_dtype(kept[source]) and not pd.api.types.is_bool_dtype(kept[source]))
-        for a, b in zip(values, stored[final]):
+        for a, b in zip(values, stored[pn.paper_names(final)]):      # the workbook holds the names of the paper
             a = as_stored(a)
             if not numeric:
                 out["text_values_compared"] += 1
-                out["text_mismatches"] += display_text(spec, source, a) != b
+                out["text_mismatches"] += pn.named(display_text(spec, source, a)) != b
                 continue
             out["numeric_values_compared"] += 1
             if a is None or b is None or isinstance(a, str) or isinstance(b, (bool, str)):
@@ -361,7 +368,7 @@ def write_workbook(path, wb: WorkbookDef, frames: dict[str, pd.DataFrame], scrip
     book.widths[("Contents", 3)] = 118
     book.widths[("Contents", 6)] = 46
     for number, (name, title, notes) in wb.sheets.items():
-        ws = book.wb.create_sheet(name)
+        ws = book.wb.create_sheet(pn.paper_names(name))       # names of the paper; cells: Book.cell
         book.cell(ws, 1, 1, f"Supplementary Table {wb.label}, sheet {number}. {title}", FT, width=False)
         book.cell(ws, 2, 1, "Terms and column names: see the sheet Contents.", FN, width=False)
         row = 3
@@ -373,9 +380,7 @@ def write_workbook(path, wb: WorkbookDef, frames: dict[str, pd.DataFrame], scrip
             if spec.sheet == number:
                 row = book.table(ws, row, spec, frames[spec.key])
     book.set_widths()
-    book.wb.properties.title = f"Supplementary Table {wb.label}"
-    book.wb.properties.creator = cc.GENERATED_BY
-    book.wb.properties.description = f"{cc.GENERATED_TAG}; {script}"
+    set_properties(book.wb, f"Supplementary Table {wb.label}")      # title only; the script is in the manifest
     book.wb.save(path)
     return book
 
@@ -391,6 +396,7 @@ def read_back(path, positions: dict[str, dict]) -> tuple[dict[str, pd.DataFrame]
                 for i in range(1, pos["n_rows"] + 1)]
         frames[key] = pd.DataFrame(rows, columns=header, dtype=object)       # cells as stored: None stays None
     stats = {"cells": 0, "not_arial": 0, "formulas": 0, "forbidden": [], "notes": {}, "process": []}
+    texts = {wb.properties.title or "", *wb.sheetnames}
     for ws in wb.worksheets:
         stats["notes"][ws.title] = [str(ws.cell(row=r, column=1).value or "") for r in range(1, 12)]
         if PROCESS_WORDS.search(ws.title):
@@ -399,6 +405,8 @@ def read_back(path, positions: dict[str, dict]) -> tuple[dict[str, pd.DataFrame]
             for c in row:
                 if c.value is None:
                     continue
+                if isinstance(c.value, str):
+                    texts.add(c.value)
                 stats["cells"] += 1
                 stats["not_arial"] += c.font.name != "Arial"
                 stats["formulas"] += c.data_type == "f"
@@ -407,6 +415,7 @@ def read_back(path, positions: dict[str, dict]) -> tuple[dict[str, pd.DataFrame]
                 if isinstance(c.value, str) and PROCESS_WORDS.search(c.value):
                     stats["process"].append(f"{ws.title}!{c.coordinate}: {c.value[:60]}")
     stats["sheets"] = wb.sheetnames
+    stats["labels_left"], stats["texts_read"] = pn.labels_left(texts), stats["cells"]
     return frames, stats
 
 
@@ -462,8 +471,10 @@ def build(wb: WorkbookDef, args) -> None:
     print(f"Saved workbook: {cc.rel(out)}")
 
     stored, stats = read_back(out, book.positions)
+    written = {n: pn.paper_names(wb.sheets[n][0]) for n in wb.sheets}       # sheet names as the workbook has them
     check(checks, "workbook sheets", ", ".join(stats["sheets"]), "Contents, then the numbered sheets",
-          stats["sheets"] == ["Contents", *names])
+          stats["sheets"] == ["Contents", *[written[n] for n in sorted(wb.sheets)]])
+    check_paper_names(checks, stats)
 
     # Per table: rows after the stated filter, and the stored values against the filtered source (read again).
     verified = {}
@@ -489,10 +500,10 @@ def build(wb: WorkbookDef, args) -> None:
     differ, largest = [], 0.0
     for key, frame in frames.items():
         got = stored[key]
-        if list(got.columns) != [str(c) for c in frame.columns] or got.shape != frame.shape:
+        if list(got.columns) != [pn.paper_names(str(c)) for c in frame.columns] or got.shape != frame.shape:
             differ.append(f"{key}: shape or header")
             continue
-        diffs = [rel_diff(as_stored(a), b) for row_a, row_b in zip(frame.itertuples(index=False, name=None),
+        diffs = [rel_diff(pn.named(as_stored(a)), b) for row_a, row_b in zip(frame.itertuples(index=False, name=None),
                                                                  got.itertuples(index=False, name=None))
                  for a, b in zip(row_a, row_b)]
         n = sum(d > REL_TOL for d in diffs)
@@ -525,7 +536,7 @@ def build(wb: WorkbookDef, args) -> None:
         isinstance(x, str) and re.search(r"(?<![A-Za-z])Unknown(?![A-Za-z])", x)
         for x in stored[spec.key].to_numpy().ravel())})
     lack = [n for n in sorted(set(need) | set(shown)) if not any(UNKNOWN_NOTE in line
-                                                                 for line in stats["notes"][wb.sheets[n][0]])]
+                                                                 for line in stats["notes"][written[n]])]
     check(checks, f"every sheet with a DCT table that shows Unknown carries the note '{UNKNOWN_NOTE}'",
           f"sheets with such a table: {sorted(set(need) | set(shown)) or 'none'}; without the note: {lack or 'none'}",
           "without the note: none", not lack)

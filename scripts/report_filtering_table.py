@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-01-a (cell and protein filtering per dataset), one workbook.
+"""The response to the reviewers: Supplementary Table S9 (cell and protein filtering per dataset), one workbook.
 
-The authors asked on 12 Nov 2026 to assemble Supplementary
-Tables S-01-a, S-02-d and S-03-b ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S-01-a: cells and
+The authors asked on 12 Nov 2026 to assemble Supplementary Tables S9, S3 and S1 ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S9: cells and
 protein groups before and after filtering, the protein range of the removed cells and the proteins per retained
 cell, for the total-kidney data and for the DCT data per diet condition and sort plate; the per-cell lists of the
 removed cells are the optional part of that plan (sheet 2). No new statistics: every value is copied from the
@@ -17,7 +16,7 @@ What the assembly changes (all recorded per table in the sources table):
   `proteins_per_cell_*`, `plate` -> `sort_plate`.
 
 Workbook: results/tables/report/report_01_S01a_tables.xlsx (sheet Contents, then sheets 1-2), in the
-layout of Supplementary Table S-07-d (shared code: report_table_lib.py).
+layout of Supplementary Table S7 (shared code: report_table_lib.py).
 
 Inputs (read-only): the five kidney_object / dct_intake tables named in SPECS.
 Outputs: the workbook; results/tables/report/report_01_s01a_table_{sources,checks}.csv;

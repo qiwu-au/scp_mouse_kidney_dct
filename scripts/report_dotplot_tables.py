@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-06-b (marker placement for Figures 2B and 3B), one workbook.
+"""The response to the reviewers: Supplementary Table S5 (marker placement for Figures 2b and 4f), one workbook.
 
 The authors asked on 12 Nov 2026 to assemble the table
 ("Yes, assemble them"). The response to the reviewers, section 5, fixes its content: one workbook with four sheets, built from six stored
-tables (kidney_annotation marker order and detection, kidney_figure2 Figure 2B values, the Figure 3B values of the response to the reviewers, dct_labels DCT marker
+tables (kidney_annotation marker order and detection, kidney_figure2 Figure 2B values, the Figure 4f values of the response to the reviewers, dct_labels DCT marker
 order). No new statistics: every value is copied from the stored tables. Layout, assembly and checks are those of
-Supplementary Table S-05-b (report_annotation_tables.py, imported; it follows Supplementary Table S-07-d).
+Supplementary Table S10 (report_annotation_tables.py, imported; it follows Supplementary Table S7).
 
 What the assembly changes (all recorded per table in the sources table):
 - rows: table 1a keeps the rows of the 45-marker layout (version 'full'); the rows of the 19-marker selection, a rule
@@ -13,7 +13,7 @@ What the assembly changes (all recorded per table in the sources table):
 - columns: left out are the columns of the dropped 19-marker rule (eligible, rank_in_group, selected, selection),
   constant, duplicate and internal columns (figure file names, internal notes);
 - names: internal names are replaced in column names and cell values; kidney cell types carry the display names of
-  the revised annotation (DCT1 -> DCT, PC -> CNT/PC; the kidney Unknown keeps its name); the Figure 3B row of the
+  the revised annotation (DCT1 -> DCT, PC -> CNT/PC; the kidney Unknown keeps its name); the Figure 4f row of the
   DCT cells without a resolved subtype is shown with the display name of the redrawn figure (row_display of the
   values file: "DCT, subtype not resolved"); DCT conditions are Control and Zero-K, side by side;
 - final products only (authors, 12 Nov 2026: "The readers will not know the revision process, so we only show the final
@@ -49,6 +49,7 @@ import pandas as pd
 
 import report_annotation_tables as base     # Spec, Config, build, pick and the kidney display names: reused unchanged
 import report_pt_tal_tables as s7
+import report_item_names as pn      # the workbook holds the names of the paper: values are looked up by them
 
 Spec, pick, kidney_labels = base.Spec, base.pick, base.kidney_labels
 KIDNEY_ANNOTATION, KIDNEY_FIGURE2, DCT_LABELS, REPORT = "kidney_annotation", "kidney_figure2", "dct_labels", "report"
@@ -246,7 +247,7 @@ NUMBERS = [
      lambda f: ", ".join(f.loc[f["column_group_is_top_row"].eq(False), "marker"]),
      "Slc9a3, Slc13a3, Slc27a2, Slc22a6, Calb1, Slc8a1", None),
     ("rows of Figure 2B, in order", "3a",
-     lambda f: list(pd.unique(f.loc[f["panel"].eq("protein (Figure 2B)"), "row"])), ROWS_2B, None),
+     lambda f: list(pd.unique(f.loc[f["panel"].eq(pn.paper_names("protein (Figure 2B)")), "row"])), ROWS_2B, None),
     ("plotted values per panel of Figure 2B (9 rows x 45 markers)", "3a",
      lambda f: sorted(f["panel"].value_counts().tolist()), [405, 405, 405], None),
     ("markers detected in fewer than 25% of the cells of their own cell type", "2a",
@@ -263,12 +264,12 @@ NUMBERS = [
     ("DCT list markers quantified and shown in Supplementary Figure S-06-a; not quantified", "4a",
      lambda f: (lambda d: f"{int(d['shown'].astype(bool).sum())}; "
                           f"{', '.join(d.loc[~d['shown'].astype(bool), 'marker'])}")(
-         f[f["layout"].eq("Supplementary Figure S-06-a")]), "13; Col5a2, Cenpf", None),
+         f[f["layout"].eq(pn.paper_names("Supplementary Figure S-06-a"))]), "13; Col5a2, Cenpf", None),
 ]
 
 
 def extra_checks(frames: dict, stored: dict, cells: dict, checks: list[dict]) -> None:
-    """Display names of the kidney cell types and of the Figure 3B rows; the dropped rule's columns are gone."""
+    """Display names of the kidney cell types and of the Figure 4f rows; the dropped rule's columns are gone."""
     label_cols = {"1a": ("column_group", "listed_for", "also_listed_for", "mean_z_listing_types", "top_row"),
                   "2a": ("column_group", "other_type_with_highest_mean_z"), "3a": ("row", "column_group"),
                   "3b": ("column_group", "protein_top_row", "rna_all_cells_nuclei_top_row",

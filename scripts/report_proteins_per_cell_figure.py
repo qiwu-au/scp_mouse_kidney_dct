@@ -1,9 +1,9 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-01-b - proteins per cell in the DCT data, control and zero-K.
+"""The response to the reviewers: Supplementary Figure S12 - proteins per cell in the DCT data, control and zero-K.
 
 The authors asked on 12 Nov 2026 to redraw the two
 supplementary figures that existed only as analysis figures ("Yes, redraw them"). The response to the reviewers, section 5, fixes the
-content of S-01-b: the proteins per cell of all control and zero-K cells (removed cells ringed; line at 100
+content of S12: the proteins per cell of all control and zero-K cells (removed cells ringed; line at 100
 proteins) and of the retained cells over the proteins retained in both conditions, by condition and sort plate.
 This script redraws the dct_intake analysis figure (dct_intake_qc.py, dct_intake_proteins_per_cell) as one reader-facing
 figure. No new statistics: the points are the stored per-cell counts and the boxes are the stored quartiles.

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figures S-08-a to S-08-c (RNA-protein integration), revised annotation only.
+"""The response to the reviewers: Supplementary Figures S9 to S11 (RNA-protein integration), revised annotation only.
 
 The authors decided on 30 Oct 2026 that the kidney_annotation revised
 annotation (kidney_t15_label) is the only kidney annotation in the manuscript and letter. The rna_protein_integration figures show the
@@ -8,13 +8,16 @@ stored rna_protein_integration outputs. No new statistics: every plotted value i
 
 Figures (results/figures/report/, PDF + 600-dpi PNG, 180 mm wide; no in-figure title or footnote, the legend
 text is in the the response to the reviewers file):
-- report_08_joint_umaps (S-08-a): UMAPs of the embeddings A (joint PCA), B (A + Harmony, modality as batch) and
+- report_08_joint_umaps (S9): UMAPs of the embeddings A (joint PCA), B (A + Harmony, modality as batch) and
   C (atlas scVI space; SCP-MS cells placed by their 15 nearest atlas cells), RNA draw 42; top by modality, bottom by
   cell type (revised annotation; atlas cells by the label their class is matched to).
-- report_08_mixing (S-08-b): modality mixing within each cell type, A vs B (median and range over 5 draws).
-- report_08_transfer (S-08-c): atlas Celltype transferred to the SCP-MS cells in B (draw 42, k = 15), with the
+- report_08_mixing (S10): modality mixing within each cell type, A vs B (median and range over 5 draws).
+- report_08_transfer (S11): atlas Celltype transferred to the SCP-MS cells in B (draw 42, k = 15), with the
   matched (solid) and accepted mixed (dashed) atlas classes outlined and the matched fraction per label.
 Display names (authors, 30 Oct 2026): DCT1 -> DCT, PC -> CNT/PC.
+Colours of S9 (step 33, 20 Nov 2026): the cell-type colours of Figure 2 (kidney_figure2_lib.palette: the kidney_annotation palette
+with PST in brown #8c564b; authors, 10 Nov 2026), so that a cell type has one colour in Figure 2 and in this figure.
+Until then the kidney_annotation palette was used as it is (PST grey #7f7f7f). S10 and S11 use no cell-type colour.
 
 Inputs (read-only): kidney_object canonical kidney object and kidney_annotation labels (via kidney_rna_lib.load_kidney), kidney_rna mapping table,
                     results/h5ad/rna_protein_integration_joint_embedding.h5ad, rna_protein_integration tables mixing_per_type, mixing_global,
@@ -50,7 +53,7 @@ import cluster_de_lib as t5
 import kidney_rna_lib as L7
 import rna_protein_integration_lib as T
 import rna_protein_integration_figures as F10          # rna_protein_integration figure helpers and colours (chip legend, axes, embedding colours)
-import kidney_annotation_chosen_labels as t15c   # kidney_annotation palette
+import kidney_figure2_lib as KIDNEY_FIGURE2              # cell-type colours of Figure 2 (kidney_annotation palette, PST in brown)
 import atlas_dct_lib as T8
 
 plt = T8.setup_matplotlib()
@@ -83,7 +86,7 @@ def tw(s: str) -> float:
 
 
 # ---------------------------------------------------------------------------
-# S-08-a: joint UMAPs
+# S9: joint UMAPs
 # ---------------------------------------------------------------------------
 def umap_figure(run, rows_out, joint, palette: dict[str, str], order: list[str]) -> list[dict]:
     obs = joint.obs
@@ -143,7 +146,7 @@ def umap_figure(run, rows_out, joint, palette: dict[str, str], order: list[str])
 
 
 # ---------------------------------------------------------------------------
-# S-08-b: mixing within each cell type
+# S10: mixing within each cell type
 # ---------------------------------------------------------------------------
 def mixing_figure(run, rows_out, mix_t: pd.DataFrame, mix_g: pd.DataFrame) -> list[dict]:
     prim = mix_t[(mix_t["config"] == "primary") & (mix_t["skipped"].fillna("") == "") & (mix_t["label_column"] == COL)]
@@ -214,7 +217,7 @@ def mixing_figure(run, rows_out, mix_t: pd.DataFrame, mix_g: pd.DataFrame) -> li
 
 
 # ---------------------------------------------------------------------------
-# S-08-c: label transfer in B
+# S11: label transfer in B
 # ---------------------------------------------------------------------------
 def transfer_figure(run, rows_out, conf: pd.DataFrame, per_label: pd.DataFrame, mapping: pd.DataFrame,
                     order: list[str], checks: list[dict]) -> list[dict]:
@@ -313,10 +316,14 @@ def main() -> None:
     mix_t, mix_g = tab("mixing_per_type"), tab("mixing_global")
     conf, per_label = tab("transfer_confusion"), tab("transfer_per_label")
     order = L7.row_order(labels[COL].unique())
-    palette = t15c.palette(adata, order)
+    palette_checks = t5.Checks(T.DATASET)
+    palette = KIDNEY_FIGURE2.palette(adata, order, palette_checks)      # as Figure 2: PST #8c564b (authors, 10 Nov 2026)
     plt.rcParams.update({"font.family": "Arial", "font.size": FONT, "pdf.fonttype": 42, "ps.fonttype": 42})
 
     checks: list[dict] = []
+    checks += [{"check": f"S-08-a colours = the colours of Figure 2 (kidney_figure2_lib.palette): {r['check']}",
+                "observed": r["observed"], "expected": r["threshold"], "pass": r["pass"]}
+               for r in palette_checks.rows]
     is_scp = (joint.obs["modality"] == "SCP").to_numpy()
     obs = joint.obs.loc[is_scp, COL].astype(str).value_counts().to_dict()
     checks.append({"check": "joint embedding: SCP-MS cells per revised-annotation label", "observed": str(obs),

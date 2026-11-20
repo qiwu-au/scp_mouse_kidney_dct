@@ -1,10 +1,10 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figures S-07-a to S-07-c (PT / TAL heterogeneity), revised annotation only.
+"""The response to the reviewers: Supplementary Figures S6 to S8 (PT / TAL heterogeneity), revised annotation only.
 
 The authors decided on 30 Oct 2026 that the kidney_annotation revised
 annotation (kidney_t15_label) is the only kidney annotation in the manuscript, letter and figures, and asked on
 10 Nov 2026 for the S-07 panels to be redrawn with it ("Yes, redraw them"). On 11 Nov 2026 the authors asked for each
-supplementary figure as one assembled figure instead of separate panel files ("make Supplemental Figure S-07-a as one
+supplementary figure as one assembled figure instead of separate panel files ("make Supplementary Figure S6 as one
 figure (not as separate panels a b c). Same for 07-b and 07-c"). No new statistics: every plotted value is read from
 the stored pt_tal / rat_segments tables.
 
@@ -148,7 +148,7 @@ def assemble(run, fig_rows: list[dict], name: str, desc: str, rows: list[list[tu
 
 
 # ---------------------------------------------------------------------------
-# S-07-a A: paired dotplot (protein above RNA), revised annotation rows only
+# S6 A: paired dotplot (protein above RNA), revised annotation rows only
 # ---------------------------------------------------------------------------
 def dotplot_block(checks, cols: pd.DataFrame, vals: pd.DataFrame, colors: dict, avail: float) -> Block:
     cols = cols[cols["version"] == "main"].sort_values("position")
@@ -225,7 +225,7 @@ def dotplot_block(checks, cols: pd.DataFrame, vals: pd.DataFrame, colors: dict, 
 
 
 # ---------------------------------------------------------------------------
-# S-07-a B: nearest atlas subtype per cell type
+# S6 B: nearest atlas subtype per cell type
 # ---------------------------------------------------------------------------
 def mapping_block(checks, conf: pd.DataFrame) -> Block:
     LH = T9.LH
@@ -289,7 +289,7 @@ def mapping_block(checks, conf: pd.DataFrame) -> Block:
 
 
 # ---------------------------------------------------------------------------
-# S-07-b A and S-07-c A: PCT vs PST effects, one series
+# S7 A and S8 A: PCT vs PST effects, one series
 # ---------------------------------------------------------------------------
 def effects_block(tests: pd.DataFrame, rows: tuple[str, ...], split_before: str, avail: float) -> Block:
     LH = T9.LH
@@ -345,7 +345,7 @@ def effects_block(tests: pd.DataFrame, rows: tuple[str, ...], split_before: str,
 
 
 # ---------------------------------------------------------------------------
-# S-07-b B: subset UMAPs
+# S7 B: subset UMAPs
 # ---------------------------------------------------------------------------
 def umaps_block(checks, per_cell: pd.DataFrame, colors: dict, avail: float) -> Block:
     from matplotlib import colormaps
@@ -379,7 +379,7 @@ def umaps_block(checks, per_cell: pd.DataFrame, colors: dict, avail: float) -> B
 
 
 # ---------------------------------------------------------------------------
-# S-07-c B and C: pseudobulk vs the rat segments
+# S8 B and C: pseudobulk vs the rat segments
 # ---------------------------------------------------------------------------
 def ratios_block(checks, ratio: pd.DataFrame) -> Block:
     """SCP-MS PCT - PST difference vs each rat log2 ratio, with the depth-stratified permutation range."""

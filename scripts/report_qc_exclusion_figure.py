@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-02-c - exclusion of the cells flagged on a mitochondrial metric
+"""The response to the reviewers: Supplementary Figure S4 - exclusion of the cells flagged on a mitochondrial metric
 against 100 random removals, total kidney and DCT (control and zero-K side by side), as one assembled figure.
 
 (reviewer 1, comment 1). The authors asked on 12 Nov 2026 for the

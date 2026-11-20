@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-05-c, resolution scans of the kidney and the DCT data.
+"""The response to the reviewers: Supplementary Figure S13, resolution scans of the kidney and the DCT data.
 
 Drawn at the authors' request (12 Nov 2026: "Yes, redraw
 them"; the response to the reviewers, section 4 re-render checklist and section 5). It assembles, as one reader-facing file, the three
@@ -8,7 +8,7 @@ results/figures/dct_labels/dct_labels_scan_summary_{ctrl,zerok} (internal names,
 footers); those files are not edited. No new statistics: every plotted number is read from the stored kidney_annotation and dct_labels
 scan tables.
 
-Changed on 12 Nov 2026 at the authors' request, relayed by the coordinator ("in Supplementary Figure S-05-c, delete
+Changed on 12 Nov 2026 at the authors' request, relayed by the coordinator ("in Supplementary Figure S13, delete
 submitted graph and submitted re-annotation. The readers will not know the revision process, so we only show the
 final products."; asked about the three lines of panels A-C, the final choice was "Keep all three, rename blue"):
 panels A-C keep the three graphs with their colours; the blue series is named "graph of the main analysis" (was
@@ -28,7 +28,7 @@ One figure, 180 mm wide, seven panels in three rows:
        E, G: left bar (T) = top-25 rule only, right bar (T+) = with the added step; F: open / filled point.
   A triangle marks the resolution used (kidney 2, DCT 1).
 Names: rules "top-25 rule only" / "with the added step";
-  graphs "graph of the main analysis" (Supplementary Table S-05-b: "submitted graph"), "depth-regressed graph",
+  graphs "graph of the main analysis" (Supplementary Table S10: "submitted graph"), "depth-regressed graph",
   "unscaled, 500 most variable proteins"; DCT label value
   'Unknown' shown as "not resolved"; confidence classes "type-specific marker, any rank", "shared markers only",
   "no marker support (subtype not resolved)"; the kidney 'Unknown' keeps its name. The values file keeps the stored

@@ -1,11 +1,10 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-08-d (RNA-protein integration and concordance), one workbook.
+"""The response to the reviewers: Supplementary Table S8 (RNA-protein integration and concordance), one workbook.
 
-The authors asked on 12 Nov 2026 to assemble Supplementary
-Tables S-08-d and S-09-c ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S-08-d: one workbook
+The authors asked on 12 Nov 2026 to assemble Supplementary Tables S8 and S11 ("Yes, assemble them"). The response to the reviewers, section 5, fixes the content of S8: one workbook
 with eight sheets, built from 27 stored tables (kidney_rna atlas, rna_protein_integration integration, and the two value tables of the the response to the reviewers
 figures). Kidney data only, revised annotation only (kidney_t15_label; one-annotation rule, authors 30 Oct 2026).
-No new statistics: every value is copied from the stored tables. The layout follows Supplementary Table S-07-d
+No new statistics: every value is copied from the stored tables. The layout follows Supplementary Table S7
 (scripts/report_pt_tal_tables.py), whose workbook helpers are imported unchanged.
 
 What the assembly changes (all recorded per table in the sources table):
@@ -15,7 +14,7 @@ What the assembly changes (all recorded per table in the sources table):
   notes of the matching table are dropped (they name tasks, the submitted annotation and decisions); columns that
   are empty after the row filter are dropped; two columns that repeat another column are dropped after a check;
 - names: display names of the cell types (DCT1 -> DCT, PC -> CNT/PC; Unknown stays) in the columns that hold an
-  SCP-MS cell type; the marker-list categories (listed_for, type) keep the names of Supplementary Table 1;
+  SCP-MS cell type; the marker-list categories (listed_for, type) keep the names of Supplementary Table S2;
   internal names are replaced in column names and cell values (t07_, compartment, feature, scib, mka.h5ad); the
   three p_rho columns of the chance table are named fraction_rho (they hold the fraction of the orderings);
 - two long-format tables are split by block, each with the columns that apply to it: the values of the three
@@ -23,7 +22,7 @@ What the assembly changes (all recorded per table in the sources table):
 - sheet 2 is one table: rna_protein_integration_features.csv holds every column of kidney_rna_shared_features.csv (checked equal).
 
 This module also holds the general assembly code (Spec, Rules, Layout, build) that
-scripts/report_negative_markers_tables.py imports for Supplementary Table S-09-c. Added on 12 Nov 2026 (authors:
+scripts/report_negative_markers_tables.py imports for Supplementary Table S11. Added on 12 Nov 2026 (authors:
 "The readers will not know the revision process, so we only show the final products"): a check that no cell and
 no sheet name of the saved workbook contains "submitted", "submission" or "re-annotation".
 
@@ -64,14 +63,15 @@ from openpyxl import load_workbook
 from openpyxl.styles import Alignment
 
 import scp_common as cc
-from report_pt_tal_tables import (F, FB, FN, FT, HEAD_BORDER, HEAD_FILL, REL_TOL, Book, _pick, check, native,
-                                      rel_diff)
+import report_item_names as pn
+from report_pt_tal_tables import (F, FB, FN, FT, HEAD_BORDER, HEAD_FILL, REL_TOL, Book, _pick, check,
+                                      check_paper_names, native, rel_diff, set_properties)
 
 TASK = "report"
 
 
 # ---------------------------------------------------------------------------
-# General assembly code (also used for Supplementary Table S-09-c)
+# General assembly code (also used for Supplementary Table S11)
 # ---------------------------------------------------------------------------
 @dataclass
 class Spec:
@@ -110,7 +110,7 @@ class Rules:
 
 @dataclass
 class Layout:
-    number: str                                # "S-08-d"
+    number: str                                # "S8"
     step: str                                  # run step, e.g. "08_s08d_table"
     workbook: str
     title: str
@@ -318,7 +318,7 @@ def write_workbook(path, layout: Layout, specs: list[Spec], frames: dict[str, pd
     book.widths[("Contents", 1)] = max(len(name) for name, _ in layout.sheets.values())
     book.widths[("Contents", 3)] = 118
     for number, (name, title) in layout.sheets.items():
-        ws = book.wb.create_sheet(name)
+        ws = book.wb.create_sheet(pn.paper_names(name))       # names of the paper; cells: Book.cell
         book.cell(ws, 1, 1, f"Supplementary Table {layout.number}, sheet {number}. {title}", FT, width=False)
         lines = ("Terms and column names: see the sheet Contents.", *layout.sheet_lines.get(number, ()))
         for i, line in enumerate(lines, 2):
@@ -328,9 +328,7 @@ def write_workbook(path, layout: Layout, specs: list[Spec], frames: dict[str, pd
             if spec.sheet == number and spec.key in frames:
                 row = book.table(ws, row, spec, frames[spec.key])
     book.set_widths()
-    book.wb.properties.title = f"Supplementary Table {layout.number}"
-    book.wb.properties.creator = cc.GENERATED_BY
-    book.wb.properties.description = f"{cc.GENERATED_TAG}; scripts/report_{layout.step}.py"
+    set_properties(book.wb, f"Supplementary Table {layout.number}")
     book.wb.save(path)
     return book
 
@@ -355,6 +353,7 @@ def read_back(path, positions: dict[str, dict], forbidden: re.Pattern) -> tuple[
             n, r = n + 1, r + 1
         rows_found[key] = n
     stats = {"cells": 0, "not_arial": 0, "formulas": 0, "forbidden": [], "long_names": [], "process": []}
+    texts = {wb.properties.title or "", *wb.sheetnames}
     for ws in wb.worksheets:
         if len(ws.title) > 31:
             stats["long_names"].append(ws.title)
@@ -364,6 +363,8 @@ def read_back(path, positions: dict[str, dict], forbidden: re.Pattern) -> tuple[
             for c in row:
                 if c.value is None:
                     continue
+                if isinstance(c.value, str):
+                    texts.add(c.value)
                 stats["cells"] += 1
                 stats["not_arial"] += c.font.name != "Arial"
                 stats["formulas"] += c.data_type == "f"
@@ -373,6 +374,7 @@ def read_back(path, positions: dict[str, dict], forbidden: re.Pattern) -> tuple[
                     stats["process"].append(f"{ws.title}!{c.coordinate}: {c.value[:60]}")
     stats["sheets"] = wb.sheetnames
     stats["rows_found"] = rows_found
+    stats["labels_left"], stats["texts_read"] = pn.labels_left(texts), stats["cells"]
     return frames, stats
 
 
@@ -381,6 +383,7 @@ def source_differences(stored: pd.DataFrame, source: pd.DataFrame, colmap: dict[
     out = {"values": 0, "mismatch": 0, "max_abs": 0.0, "max_rel": 0.0}
     for new, old in colmap.items():
         s = source[old]
+        new = pn.paper_names(new)                # the column as the workbook names it
         if _is_text(s) or new not in stored.columns:
             continue                             # text: covered by the comparison with the assembled table
         for a, b in zip(s.tolist(), stored[new].tolist()):
@@ -399,8 +402,8 @@ def source_differences(stored: pd.DataFrame, source: pd.DataFrame, colmap: dict[
 
 def rows_where(frame: pd.DataFrame, **sel) -> pd.DataFrame:
     mask = pd.Series(True, index=frame.index)
-    for key, value in sel.items():
-        mask &= frame[key].astype(str).eq(str(value))
+    for key, value in sel.items():               # columns and values by the names of the paper, as the workbook has them
+        mask &= frame[pn.paper_names(key)].astype(str).eq(pn.paper_names(str(value)))
     return frame[mask]
 
 
@@ -471,11 +474,12 @@ def build(layout: Layout, specs: list[Spec], rules: Rules, letter: list, descrip
     print(f"Saved workbook: {cc.rel(out)}")
 
     stored, stats = read_back(out, book.positions, rules.forbidden)
-    names = ["Contents", *[layout.sheets[s][0] for s in sorted(layout.sheets)]]
+    names = ["Contents", *[pn.paper_names(layout.sheets[s][0]) for s in sorted(layout.sheets)]]   # as written
     check(checks, "workbook sheets: Contents, then the numbered sheets; names of at most 31 characters that start "
           "with the sheet number", ", ".join(stats["sheets"]), ", ".join(names),
           stats["sheets"] == names and not stats["long_names"]
-          and all(n.startswith(f"{s} ") for s, (n, _) in layout.sheets.items()))
+          and all(n.startswith(f"{s} ") for s, n in zip(sorted(layout.sheets), names[1:])))
+    check_paper_names(checks, stats)
     short = {k: (len(f), stats["rows_found"][k]) for k, f in frames.items() if stats["rows_found"][k] != len(f)}
     check(checks, "rows found under each table header of the saved workbook = rows of the table",
           short or f"{len(frames)} tables, {int(sum(len(f) for f in frames.values()))} rows", "equal for every table",
@@ -483,10 +487,10 @@ def build(layout: Layout, specs: list[Spec], rules: Rules, letter: list, descrip
     differ, largest = [], 0.0
     for key, frame in frames.items():
         got = stored[key]
-        if list(got.columns) != [str(c) for c in frame.columns] or got.shape != frame.shape:
+        if list(got.columns) != [pn.paper_names(str(c)) for c in frame.columns] or got.shape != frame.shape:
             differ.append(f"{key}: shape or header")
             continue
-        diffs = [rel_diff(native(a), b) for row_a, row_b in zip(frame.itertuples(index=False, name=None),
+        diffs = [rel_diff(pn.named(native(a)), b) for row_a, row_b in zip(frame.itertuples(index=False, name=None),
                                                                  got.itertuples(index=False, name=None))
                  for a, b in zip(row_a, row_b)]
         n = sum(d > REL_TOL for d in diffs)
@@ -561,7 +565,7 @@ def build(layout: Layout, specs: list[Spec], rules: Rules, letter: list, descrip
 
 
 # ---------------------------------------------------------------------------
-# Supplementary Table S-08-d
+# Supplementary Table S8
 # ---------------------------------------------------------------------------
 COL = "kidney_t15_label"
 OTHER_ANNOTATIONS = ("kidney_pre_label", "kidney_reannot_label")

@@ -1,12 +1,11 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-05-b (annotation scans and evidence), one workbook.
+"""The response to the reviewers: Supplementary Table S10 (annotation scans and evidence), one workbook.
 
 The authors asked on 12 Nov 2026 to assemble the table
 ("Yes, assemble them"). The response to the reviewers, section 5, listed ten sheets from 17 stored tables. Later on 12 Nov 2026 the authors
 ruled: "The readers will not know the revision process, so we only show the final products." The workbook therefore
 has seven sheets, built from 13 stored tables (kidney sheets 1-4: kidney_annotation, cluster_de; DCT sheets 5-7: dct_labels, combined control +
-zero-K search). No new statistics: every value is copied from the stored tables. The layout follows Supplementary
-Table S-07-d (report_pt_tal_tables.py, whose workbook helpers are imported unchanged).
+zero-K search). No new statistics: every value is copied from the stored tables. The layout follows Supplementary Table S7 (report_pt_tal_tables.py, whose workbook helpers are imported unchanged).
 
 Final products only (authors, 12 Nov 2026):
 - the three sheets that showed the labels of the submitted version are not in the workbook (submitted Figure 2A / 2B
@@ -69,7 +68,8 @@ from openpyxl import load_workbook
 from openpyxl.styles import Alignment
 
 import scp_common as cc
-import report_pt_tal_tables as s7      # Book, native, number_format, rel_diff, check, fonts: reused unchanged
+import report_item_names as pn      # names of the figures and tables in the paper
+import report_pt_tal_tables as s7     # Book, native, number_format, rel_diff, check, fonts: reused unchanged
 
 TASK = "report"
 CLUSTER_DE, DOTPLOT, KIDNEY_ANNOTATION, DCT_LABELS = "cluster_de", "dotplot", "kidney_annotation", "dct_labels"
@@ -81,7 +81,7 @@ NOT_IN_WORKBOOK = "not in the workbook (removed at the authors' request, 12 Nov 
 
 
 # ---------------------------------------------------------------------------
-# Generic part (also used by the S-06-b script)
+# Generic part (also used by the S5 script)
 # ---------------------------------------------------------------------------
 @dataclass
 class Spec:
@@ -116,7 +116,7 @@ class Spec:
 class Config:
     step: str                                  # e.g. "05_s05b_table"
     workbook: str
-    table_id: str                              # e.g. "S-05-b"
+    table_id: str                              # e.g. "S10"
     title: str
     intro: str
     sheets: dict[int, tuple[str, str]]         # number -> (sheet name, title)
@@ -246,7 +246,7 @@ def assemble(spec: Spec, src: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame,
 
 
 def write_workbook(path, cfg: Config, frames: dict[str, pd.DataFrame], left_out: dict[str, str]) -> s7.Book:
-    """Contents sheet, then one sheet per part; layout and style of Supplementary Table S-07-d."""
+    """Contents sheet, then one sheet per part; layout and style of Supplementary Table S7."""
     book = s7.Book()
     ws = book.wb.create_sheet("Contents")
     book.cell(ws, 1, 1, cfg.title, s7.FT, width=False)
@@ -278,7 +278,7 @@ def write_workbook(path, cfg: Config, frames: dict[str, pd.DataFrame], left_out:
     book.widths[("Contents", 1)] = max(len(name) for name, _ in cfg.sheets.values())
     book.widths[("Contents", 3)] = 118
     for number, (name, title) in cfg.sheets.items():
-        ws = book.wb.create_sheet(name)
+        ws = book.wb.create_sheet(pn.paper_names(name))       # names of the paper; cells: s7.Book.cell
         book.cell(ws, 1, 1, f"Supplementary Table {cfg.table_id}, sheet {number}. {title}", s7.FT, width=False)
         book.cell(ws, 2, 1, "Terms and column names: see the sheet Contents.", s7.FN, width=False)
         row = 3
@@ -296,9 +296,7 @@ def write_workbook(path, cfg: Config, frames: dict[str, pd.DataFrame], left_out:
                 book.cell(ws, row + 1, 1, f"Not included: {left_out[spec.key]}", s7.FN, width=False)
                 row += 4
     book.set_widths()
-    book.wb.properties.title = f"Supplementary Table {cfg.table_id}"
-    book.wb.properties.creator = cc.GENERATED_BY
-    book.wb.properties.description = f"{cc.GENERATED_TAG}; scripts/{cfg.script}"
+    s7.set_properties(book.wb, f"Supplementary Table {cfg.table_id}")
     book.wb.save(path)
     return book
 
@@ -334,6 +332,8 @@ def read_back(path, positions: dict[str, dict], forbidden: re.Pattern) -> tuple[
                     if forbidden.search(c.value):
                         stats["forbidden"].append(f"{ws.title}!{c.coordinate}: {c.value[:60]}")
         stats["text"][ws.title] = texts
+    every = {wb.properties.title or "", *wb.sheetnames, *(t for texts in stats["text"].values() for t in texts)}
+    stats["labels_left"], stats["texts_read"] = pn.labels_left(every), stats["cells"]
     return frames, stats
 
 
@@ -344,7 +344,7 @@ def source_difference(filt: pd.DataFrame, stored: pd.DataFrame, colmap: dict) ->
         s = filt[src_col]
         if not pd.api.types.is_numeric_dtype(s):
             continue
-        for a, b in zip(s.tolist(), stored[out_col].tolist()):
+        for a, b in zip(s.tolist(), stored[pn.paper_names(out_col)].tolist()):
             a = s7.native(a)
             n += 1
             d = s7.rel_diff(a, b)
@@ -359,11 +359,12 @@ def pick(frame: pd.DataFrame, col: str, **sel):
     """The one cell of a re-read table in column col where every selector matches (numbers by value)."""
     mask = pd.Series(True, index=frame.index)
     for key, value in sel.items():
+        key = pn.paper_names(key)                # the workbook holds the names of the paper
         if isinstance(value, (int, float)) and not isinstance(value, bool):
             mask &= pd.to_numeric(frame[key], errors="coerce").eq(value)
         else:
-            mask &= frame[key].astype(str).eq(str(value))
-    hit = frame.loc[mask, col]
+            mask &= frame[key].astype(str).eq(pn.paper_names(str(value)))
+    hit = frame.loc[mask, pn.paper_names(col)]
     if len(hit) != 1:
         raise LookupError(f"{len(hit)} rows for {sel}")
     return hit.iloc[0]
@@ -406,11 +407,12 @@ def build(cfg: Config, args: argparse.Namespace) -> None:
     print(f"Saved workbook: {cc.rel(out)}")
 
     stored, stats = read_back(out, book.positions, cfg.forbidden)
-    names = [name for name, _ in cfg.sheets.values()]
+    names = [pn.paper_names(name) for name, _ in cfg.sheets.values()]       # as written: names of the paper
     check(checks, "workbook sheets: Contents, then the numbered sheets; names start with the sheet number and have "
           "at most 31 characters", ", ".join(stats["sheets"]), "Contents, " + ", ".join(names),
           stats["sheets"] == ["Contents", *names]
-          and all(len(n) <= 31 and n.startswith(f"{k} ") for k, (n, _) in cfg.sheets.items()))
+          and all(len(n) <= 31 and n.startswith(f"{k} ") for k, n in zip(cfg.sheets, names)))
+    s7.check_paper_names(checks, stats)
     rows_bad = [f"{k}: filtered source {len(filtered[k])}, written {len(frames[k])}, in the sheet "
                 f"{book.positions[k]['rows_found']}" for k in frames
                 if not len(filtered[k]) == len(frames[k]) == book.positions[k]["rows_found"]]
@@ -420,10 +422,10 @@ def build(cfg: Config, args: argparse.Namespace) -> None:
     differ, largest = [], 0.0
     for key, frame in frames.items():
         got = stored[key]
-        if list(got.columns) != [str(c) for c in frame.columns] or got.shape != frame.shape:
+        if list(got.columns) != [pn.paper_names(str(c)) for c in frame.columns] or got.shape != frame.shape:
             differ.append(f"{key}: shape or header")
             continue
-        diffs = [s7.rel_diff(s7.native(a), b) for row_a, row_b in zip(frame.itertuples(index=False, name=None),
+        diffs = [s7.rel_diff(pn.named(s7.native(a)), b) for row_a, row_b in zip(frame.itertuples(index=False, name=None),
                                                                        got.itertuples(index=False, name=None))
                  for a, b in zip(row_a, row_b)]
         bad = sum(d > s7.REL_TOL for d in diffs)
@@ -512,7 +514,7 @@ def build(cfg: Config, args: argparse.Namespace) -> None:
 
 
 # ---------------------------------------------------------------------------
-# Supplementary Table S-05-b
+# Supplementary Table S10
 # ---------------------------------------------------------------------------
 STEP = "05_s05b_table"
 TABLE_TITLE = ("Supplementary Table S-05-b. Cluster annotation from differentially expressed proteins: resolution "
@@ -527,7 +529,7 @@ CONF = {"high": "high", "medium": "medium", "specific_any_rank": "type-specific 
         "below_min_size": "cluster below 5 cells"}
 CONF_DCT = {**CONF, "unknown_no_marker_in_top_de": "no marker support (subtype not resolved)"}    # The response to the reviewers, section 4
 CONF_TOP25 = {**CONF, "unknown_no_marker_in_top_de": "no marker among the top 25"}     # before the added step
-# "graph of the main analysis": authors, 12 Nov 2026 (was "submitted graph"; same name as in Supplementary Figure S-05-c)
+# "graph of the main analysis": authors, 12 Nov 2026 (was "submitted graph"; same name as in Supplementary Figure S13)
 GRAPH = {"stored": "graph of the main analysis", "regressed": "depth-regressed graph",
          "t04_total_unscaled_hvg500": "unscaled, 500 most variable proteins"}
 RULE = {"top25": "top-25 rule only", "rankfree": "with the added step"}

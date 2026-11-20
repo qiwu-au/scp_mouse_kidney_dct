@@ -1,6 +1,6 @@
 # Inputs
 
-Only two small files are part of this repository. Everything else is downloaded by the user and placed as shown.
+Only three small files are part of this repository. Everything else is downloaded by the user and placed as shown.
 
 ## Included
 
@@ -8,6 +8,7 @@ Only two small files are part of this repository. Everything else is downloaded 
 | --- | --- |
 | `marker_lists_Supplementary_Table_S2.xlsx` | the marker lists of the manuscript (Supplementary Table S2): tab "Markers of kidney" with 17 cell types, tab "Markers of DCT" with 3 |
 | `input_checksums.csv` | size and SHA-256 of the combined DCT report; `scripts/dct_intake_intake.py` stops if the file differs |
+| `paper_item_names.csv` | the name that each figure and table has in the manuscript, beside the label that the scripts use for it; read by `scripts/report_item_names.py` when a supplementary table workbook is written |
 
 ## Written by the code
 

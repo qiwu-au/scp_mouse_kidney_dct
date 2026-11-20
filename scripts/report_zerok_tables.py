@@ -1,11 +1,11 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Table S-19-e (zero-K against control in DCT cells), one workbook.
+"""The response to the reviewers: Supplementary Table S18 (zero-K against control in DCT cells), one workbook.
 
 (plan approved by the authors on 12 Nov 2026: "Approve as
 planned"). One workbook with a Contents sheet and eight data sheets (31 tables), built from 29 stored tables of
 zerok_vs_control (zero-K against control on the combined search), one of dct_intake (panel coverage in the combined search) and the
 frozen zerok_core panel (expected directions and sources). No new statistics: every value is copied from a stored table. The
-assembly and its checks are those of report_table_lib.py (layout of Supplementary Table S-07-d).
+assembly and its checks are those of report_table_lib.py (layout of Supplementary Table S7).
 
 What the assembly changes (recorded per table in the sources table):
 - conditions: Ctrl -> Control, ZeroK -> Zero-K, in values and column names;

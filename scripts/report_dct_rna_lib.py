@@ -28,7 +28,7 @@ UNRESOLVED_SHORT = "not resolved"
 ATLAS_ROWS = ("DCT", "DCT-CNT", "CNT", "CTAL", "MTAL")           # atlas level Celltype (authors, atlas_dct / pt_tal / the response to the reviewers)
 COND_DISPLAY = {"Ctrl": "Control", "ZeroK": "Zero-K"}
 RNA_TITLE = {"all": "RNA (Mouse Kidney Atlas, all cells and nuclei)"}
-LABEL_COLOURS = {"DCT1": "#1f77b4", "DCT2": "#ff7f0e", "ProLIF": "#2ca02c", "Unknown": "#B3B3B3"}   # Figure 3A
+LABEL_COLOURS = {"DCT1": "#1f77b4", "DCT2": "#ff7f0e", "ProLIF": "#2ca02c", "Unknown": "#B3B3B3"}   # Figure 4e
 # Internal names that must not be drawn (reader-facing figures; authors, 12 Nov 2026).
 BANNED = ("ctrl", "zerok", "unknown", "t08", "t27", "t28", "t29", "cs_", "primary", "second", "published", "derived",
           "generated", ".csv", "submitted", "re-annotation", "does not apply")

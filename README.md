@@ -11,7 +11,7 @@ Claude Code (Anthropic) was used to aid the scripting of the analyses of the rev
 
 | path | content |
 | --- | --- |
-| `scripts/` | 245 scripts: 155 run steps and 90 libraries |
+| `scripts/` | 247 scripts: 156 run steps and 91 libraries |
 | `SCRIPTS.csv` | every script with its stage, its role, its place in the run order, the item of the paper it makes, and whether its inputs are public |
 | `_scanpy_compat.py` | fix that makes the random seed of Leiden clustering take effect on Windows (see "Reproducing the clusters") |
 | `_scanpy_runtime.py` | cache folders for Matplotlib and Numba |
@@ -92,7 +92,7 @@ when the analyses were run. The stages, in that order:
 | `zerok_vs_control` | DCT: zero-K vs control | 9 |
 | `dct_prolif` | DCT: per-cell proliferation call | 9 |
 | `deposit` | processed-data deposit: build and validation | 2 |
-| `report` | figures and tables of the manuscript and the supplement | 51 |
+| `report` | figures and tables of the manuscript and the supplement | 52 |
 
 Libraries that several stages share: `scp_common.py` (paths, output guard), `cluster_de_lib.py` (annotation of
 clusters from their differential proteins), `dotplot_lib.py`, `preprocessing_lib.py`.
@@ -100,7 +100,7 @@ clusters from their differential proteins), `dotplot_lib.py`, `preprocessing_lib
 ## What can be rerun from the public inputs
 
 `SCRIPTS.csv`, column `inputs`, states this for every run step, from the inputs each step recorded when it was run:
-46 of the 155 run steps read only public inputs and outputs of such steps.
+46 of the 156 run steps read only public inputs and outputs of such steps.
 
 - **DCT cells, from the report to the cell annotation and the proliferation call.** These 15 steps were rerun in a
   copy of this folder from the report alone, in this order: `dct_intake_intake`, `dct_intake_objects`,
@@ -139,8 +139,13 @@ different partition. The cluster column of the processed data (Zenodo) is the re
   the DCT annotation; `cs_zerok_transfer_label` is the transferred label; `cs_t31nf_*` is the per-cell proliferation
   call. Short module aliases such as `t5` or `t27` in the code are of the same kind. The processed data use public
   names (`cell_type`, `cluster`, `prolif`); the data dictionary of the Zenodo record defines them.
-- **Result files and comments** use the working names of figures and tables. `SCRIPTS.csv`, column
-  `item_of_the_paper`, gives the figure or table of the manuscript.
+- **Figures and tables.** `SCRIPTS.csv`, column `item_of_the_paper`, gives the figure or table of the manuscript that
+  each script makes, and the comments and docstrings of the scripts use the names of the manuscript. The texts that a
+  script writes name a figure or a table by the label it had while the analyses were made (`S-02-d`, `Figure F-08`,
+  `Figure 3A`), and so do the names of result files, check tables and intermediate columns. The scripts that write
+  the supplementary table workbooks replace every label by the name of the manuscript when they write a cell, a sheet
+  name or the title: `scripts/report_item_names.py` holds the rule and reads the names from
+  `data/paper_item_names.csv`.
 - **Unknown** in the DCT tables is written "DCT, subtype not resolved" in the processed data and in the manuscript.
 
 ## Changes made for publication

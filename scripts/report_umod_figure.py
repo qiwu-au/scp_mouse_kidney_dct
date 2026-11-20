@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: Supplementary Figure S-10-a - uromodulin (Umod) and parvalbumin (Pvalb) in DCT1 and DCT2
+"""The response to the reviewers: Supplementary Figure S17 - uromodulin (Umod) and parvalbumin (Pvalb) in DCT1 and DCT2
 cells of the DCT data, with the total-kidney data and the Mouse Kidney Atlas for comparison.
 
 (authors, 12 Nov 2026: "Yes, go ahead" on the the response to the reviewers plan;

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""The response to the reviewers: supplementary figure S-09-a - Slc12a1 and Aqp2 in the DCT data (control and zero-K side
+"""The response to the reviewers: supplementary figure S14 - Slc12a1 and Aqp2 in the DCT data (control and zero-K side
 by side): detection by label and by protein depth, and the annotation after excluding the cells in which they are
 detected, against random removals.
 
