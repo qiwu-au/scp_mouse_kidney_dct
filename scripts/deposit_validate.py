@@ -579,12 +579,17 @@ def check_words(checks: t5.Checks) -> pd.DataFrame:
 
 def check_documentation(checks: t5.Checks, objects: dict) -> None:
     readme = (D / "README.md").read_text(encoding="utf-8")
-    for placeholder in lib.PLACEHOLDERS:
-        checks.add(f"README: placeholder {placeholder}", readme.count(placeholder), placeholder in readme, ">= 1")
+    left = sorted(set(lib.PLACEHOLDER_RE.findall(readme)))
+    checks.add("README: no placeholder left", left or "none", not left, "none")
+    for name, text in (("Zenodo record", lib.ZENODO_URL), ("PRIDE dataset", lib.PRIDE_ACCESSION),
+                       ("manuscript title", lib.MANUSCRIPT_TITLE), ("author list", lib.AUTHORS)):
+        checks.add(f"README: {name} named", readme.count(text), text in readme, ">= 1")
     accessions = sorted(set(re.findall(r"PXD\d+", readme)))
-    checks.add("README: PRIDE accessions named", accessions, accessions == [lib.PRIDE_KNOWN], f"only {lib.PRIDE_KNOWN}")
-    doi = sorted(set(re.findall(r"10\.\d{4,9}/[^\s)]+|zenodo\.org[^\s)]*|doi\.org[^\s)]*", readme)))
-    checks.add("README: no DOI or Zenodo address written out", doi or "none", not doi, "none")
+    checks.add("README: PRIDE accessions named", accessions, accessions == [lib.PRIDE_ACCESSION],
+               f"only {lib.PRIDE_ACCESSION}")
+    doi = sorted({d.rstrip(".,;") for d in re.findall(r"10\.\d{4,9}/[^\s)]+", readme)})
+    checks.add("README: DOIs written out", doi, doi == sorted([lib.ZENODO_DOI, lib.PRIDE_DOI]),
+               "the Zenodo record and the PRIDE dataset")
     checks.add("README: licence and code repository as in the plan",
                f"{lib.LICENCE in readme} / {lib.CODE_REPOSITORY in readme}",
                lib.LICENCE in readme and lib.CODE_REPOSITORY in readme, "both present")

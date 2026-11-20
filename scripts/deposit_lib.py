@@ -469,12 +469,17 @@ def not_exported_hits(names) -> list[str]:
 # ---------------------------------------------------------------------------
 # Texts of the deposit
 # ---------------------------------------------------------------------------
-PLACEHOLDER_DOI = "[Zenodo DOI]"
-PLACEHOLDER_PRIDE = "[PRIDE accession of the new DCT raw data]"
-PLACEHOLDER_REF = "[manuscript reference]"
-PLACEHOLDER_AUTHORS = "[author list]"
-PLACEHOLDERS = (PLACEHOLDER_DOI, PLACEHOLDER_PRIDE, PLACEHOLDER_REF, PLACEHOLDER_AUTHORS)
-PRIDE_KNOWN = "PXD073729"
+# Record and accession as given by the authors on 20 Nov 2026. The PRIDE dataset holds all raw data of the manuscript
+# and replaces the earlier accession. Title and authors as on the title page of the manuscript.
+ZENODO_DOI = "10.5281/zenodo.24365599"
+ZENODO_URL = f"https://doi.org/{ZENODO_DOI}"
+PRIDE_ACCESSION = "PXD087695"
+PRIDE_DOI = "10.6019/PXD087695"
+MANUSCRIPT_TITLE = "Single-cell proteomics: a powerful new tool to study kidney cell heterogeneity"
+AUTHORS = ("Qi Wu, Lei Cheng, Adrienne M. Assmus, Xiang Zheng, Cristina Esteva Font, Charlotte C. Petersen, "
+           "Xiangning Ding, Søren R. Paludan and Robert A. Fenton")
+PLACEHOLDERS = ()                                   # none left in the README of the deposit
+PLACEHOLDER_RE = re.compile(r"\[[A-Za-z][^\]\n]*\]")  # a bracketed note such as "[author list]"
 CODE_REPOSITORY = "https://github.com/qiwu-au/scp_mouse_kidney_dct"      # as named in the manuscript
 LICENCE = "CC BY 4.0"
 LICENCE_URL = "https://creativecommons.org/licenses/by/4.0/"
@@ -717,9 +722,9 @@ def deposit_readme(facts: dict) -> str:
     search = facts["search"]
     return f"""# Single-cell proteomics of mouse kidney and distal convoluted tubule cells: processed data
 
-{PLACEHOLDER_AUTHORS}
+{AUTHORS}
 
-Processed data of the manuscript {PLACEHOLDER_REF}. Zenodo record: {PLACEHOLDER_DOI}. Licence: {LICENCE}.
+Processed data of the manuscript "{MANUSCRIPT_TITLE}". Zenodo record: {ZENODO_URL}. Licence: {LICENCE}.
 
 ## Content
 
@@ -840,7 +845,7 @@ to take effect; the clusters were computed with that setting.
 
 ## Raw data and code
 
-- Raw mass spectrometry files: ProteomeXchange/PRIDE, {PRIDE_KNOWN} and {PLACEHOLDER_PRIDE}.
+- Raw mass spectrometry files of all data sets: ProteomeXchange/PRIDE, {PRIDE_ACCESSION} (DOI {PRIDE_DOI}).
 - Analysis code: {CODE_REPOSITORY} (not part of this record).
 
 ## Files
@@ -853,5 +858,5 @@ to take effect; the clusters were computed with that setting.
 
 The data are available under the Creative Commons Attribution 4.0 International licence ({LICENCE}, {LICENCE_URL}).
 
-Please cite the manuscript, {PLACEHOLDER_AUTHORS}, {PLACEHOLDER_REF}, and this record, {PLACEHOLDER_DOI}.
+Please cite the manuscript ({AUTHORS}. {MANUSCRIPT_TITLE}.) and this record ({ZENODO_URL}).
 """

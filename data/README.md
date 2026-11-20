@@ -23,9 +23,9 @@ the first time a script runs; they are not part of the repository.
 
 | file | source | place |
 | --- | --- | --- |
-| `DCT_Ctrl_ZeroK_combine_1535cells.csv`: Spectronaut protein-group report of the DCT cells, control and zero-potassium diet, one search of 1,535 runs | ProteomeXchange/PRIDE, [PRIDE accession of the new DCT raw data] | `DCT/` |
-| `KIDNEY_768cells.csv`: Spectronaut protein-group report of the total-kidney cells, 768 runs | ProteomeXchange/PRIDE, PXD073729 | `KIDNEY/` |
-| the processed data: four AnnData objects and their cell tables | Zenodo, [Zenodo DOI] | `zenodo/` |
+| `DCT_Ctrl_ZeroK_combine_1535cells.csv`: Spectronaut protein-group report of the DCT cells, control and zero-potassium diet, one search of 1,535 runs | ProteomeXchange/PRIDE, PXD087695 | `DCT/` |
+| `KIDNEY_768cells.csv`: Spectronaut protein-group report of the total-kidney cells, 768 runs | ProteomeXchange/PRIDE, PXD087695 | `KIDNEY/` |
+| the processed data: four AnnData objects and their cell tables | Zenodo, https://doi.org/10.5281/zenodo.24365599 | `zenodo/` |
 | `mka.h5ad`: Mouse Kidney Atlas | Zenodo record 17395591 | `reference/` |
 | `Mouse.MitoCarta3.0.xls`: MitoCarta3.0, mouse | Broad Institute, MitoCarta3.0 | `reference/` |
 | `KTEA_proteome.txt`, `KTEA_proteome_individual_sample.txt`: Kidney Tubule Expression Atlas, rat tubule segments | [URL] | `reference/KTEA/` |

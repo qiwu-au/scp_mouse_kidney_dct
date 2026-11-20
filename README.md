@@ -1,6 +1,6 @@
 # Single-cell proteomics: a powerful new tool to study kidney cell heterogeneity
 
-Qi Wu, Lei Cheng, Xiang Zheng, Adrienne M. Assmus, Cristina Esteva Font, Charlotte C. Petersen, Xiangning Ding, Søren R. Paludan and Robert A. Fenton
+Qi Wu, Lei Cheng, Adrienne M. Assmus, Xiang Zheng, Cristina Esteva Font, Charlotte C. Petersen, Xiangning Ding, Søren R. Paludan and Robert A. Fenton
 
 Python code of the analyses of this manuscript, on single-cell proteomics of mouse kidney and distal convoluted
 tubule (DCT) cells. Licence: MIT.
@@ -40,9 +40,8 @@ pip install -r requirements.txt
 
 `data/README.md` lists every input, its source and its place. In short:
 
-- the two Spectronaut protein-group reports (ProteomeXchange/PRIDE: PXD073729 for total kidney,
-  [PRIDE accession of the new DCT raw data] for the DCT cells);
-- the processed data (Zenodo, [Zenodo DOI]);
+- the two Spectronaut protein-group reports (ProteomeXchange/PRIDE, PXD087695);
+- the processed data (Zenodo, https://doi.org/10.5281/zenodo.24365599);
 - the marker lists (included): `data/marker_lists_Supplementary_Table_S2.xlsx` is Supplementary Table S2 of the
   manuscript, the kidney list with 17 cell types and the DCT list. It is the only marker file here. The scripts read
   the lists from two small workbooks, `data/KIDNEY/KIDNEY_markers_V3.xlsx` and `data/DCT/DCT_markers_V1.xlsx`, which
